@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="Images/Cobra Bachelor.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/index.css" />
+    <title>AFulcrum's Terminal Blog</title>
+  </head>
+  <body>
+    <div class="terminal-container">
+      <!-- 终端标题栏 -->
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <span class="btn close"></span>
+          <span class="btn minimize"></span>
+          <span class="btn maximize"></span>
+        </div>
+        <div class="terminal-title">AFulcrum@blog:~$</div>
+      </div>
+
+      <!-- 终端内容区域 -->
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="prompt">visitor@AFulcrum-blog:~$</span>
+          <span class="command typing-animation">cat welcome.txt</span>
+        </div>
+
+        <div class="output-section">
+          <pre class="ascii-art">
+    ___    ______      __                      
+   /   |  / ____/_  __/ /____________  ______ ___
+  / /| | / /_  / / / / / ___/ ___/ / / / / __ `__ \
+ / ___ |/ __/ / /_/ / / /__/ /  / /_/ / / / / / / /
+/_/  |_/_/    \__,_/_/\___/_/   \__,_/_/_/ /_/ /_/ 
+                                                  
+				</pre
+          >
+          <div class="welcome-text">
+            <p>欢迎来到我的终端博客！</p>
+            <p>这里记录了我的技术学习历程和思考。</p>
+          </div>
+        </div>
+
+        <div class="terminal-line">
+          <span class="prompt">visitor@AFulcrum-blog:~$</span>
+          <span class="command">ls -la posts/</span>
+        </div>
+
+        <div class="posts-section">
+          <div class="file-listing">
+            <div class="file-item">
+              <span class="permissions">-rw-r--r--</span>
+              <span class="date">2025-01-20</span>
+              <span class="filename" data-post="vue-learning"
+                >vue_学习笔记.md</span
+              >
+            </div>
+            <div class="file-item">
+              <span class="permissions">-rw-r--r--</span>
+              <span class="date">2025-01-15</span>
+              <span class="filename" data-post="web-dev">前端开发心得.md</span>
+            </div>
+            <div class="file-item">
+              <span class="permissions">-rw-r--r--</span>
+              <span class="date">2025-01-10</span>
+              <span class="filename" data-post="coding-tips"
+                >编程技巧分享.md</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="command-section">
+          <div class="terminal-line">
+            <span class="prompt">visitor@AFulcrum-blog:~$</span>
+            <input
+              type="text"
+              class="command-input"
+              placeholder="输入命令...（试试 'help' 或点击文件名）"
+            />
+          </div>
+        </div>
+
+        <!-- 文章内容显示区域 -->
+        <div class="post-content" id="post-content" style="display: none">
+          <div class="terminal-line">
+            <span class="prompt">visitor@AFulcrum-blog:~$</span>
+            <span class="command" id="current-command"></span>
+          </div>
+          <div class="post-text" id="post-text"></div>
+        </div>
+
+        <!-- 帮助信息 -->
+        <div class="help-content" id="help-content" style="display: none">
+          <div class="terminal-line">
+            <span class="prompt">visitor@AFulcrum-blog:~$</span>
+            <span class="command">help</span>
+          </div>
+          <div class="help-text">
+            <p>可用命令:</p>
+            <ul>
+              <li><code>ls</code> - 列出所有文章</li>
+              <li><code>cat [文件名]</code> - 阅读文章</li>
+              <li><code>clear</code> - 清屏</li>
+              <li><code>about</code> - 关于我</li>
+              <li><code>contact</code> - 联系方式</li>
+              <li><code>help</code> - 显示帮助</li>
+            </ul>
+            <p>您也可以直接点击文件名来阅读文章。</p>
+          </div>
+        </div>
+
+        <!-- 关于我 -->
+        <div class="about-content" id="about-content" style="display: none">
+          <div class="terminal-line">
+            <span class="prompt">visitor@AFulcrum-blog:~$</span>
+            <span class="command">about</span>
+          </div>
+          <div class="about-text">
+            <p>🚀 全栈开发者 | 技术爱好者</p>
+            <p>📚 专注于前端技术、后端开发和系统架构</p>
+            <p>🌱 持续学习新技术，分享开发经验</p>
+            <p>💻 热爱终端，喜欢用代码解决问题</p>
+          </div>
+        </div>
+
+        <!-- 联系方式 -->
+        <div class="contact-content" id="contact-content" style="display: none">
+          <div class="terminal-line">
+            <span class="prompt">visitor@AFulcrum-blog:~$</span>
+            <span class="command">contact</span>
+          </div>
+          <div class="contact-text">
+            <p>📧 Email: contact@afulcrum.dev</p>
+            <p>🐙 GitHub: AFulcrum</p>
+            <p>🌐 Website: AFulcrum.github.io</p>
+            <p>💬 欢迎交流技术问题和合作机会！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>
