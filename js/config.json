@@ -1,0 +1,47 @@
+{
+  "blogTitle": "AFulcrum's Terminal Blog",
+  "version": "2.0",
+  "author": "AFulcrum",
+  "description": "一个独特的终端风格博客，使用Linux命令浏览文章",
+  "categories": [
+    {
+      "name": "Blender",
+      "description": "3D建模和动画相关教程",
+      "icon": "🎨"
+    },
+    {
+      "name": "Obsidian",
+      "description": "知识管理和笔记技巧",
+      "icon": "📝"
+    }
+  ],
+  "commands": {
+    "help": "显示帮助信息",
+    "ls": "列出目录内容",
+    "cd": "切换目录",
+    "cat": "查看文件内容",
+    "pwd": "显示当前路径",
+    "tree": "显示目录树",
+    "find": "搜索文件",
+    "grep": "搜索内容",
+    "clear": "清空终端",
+    "whoami": "显示用户信息",
+    "date": "显示当前时间",
+    "uname": "显示系统信息"
+  },
+  "theme": {
+    "backgroundColor": "#0c0c0c",
+    "primaryColor": "#00ff00",
+    "secondaryColor": "#00aaff",
+    "errorColor": "#ff4444",
+    "warningColor": "#ffaa44",
+    "successColor": "#44ff44"
+  },
+  "features": {
+    "commandHistory": true,
+    "autoComplete": true,
+    "syntaxHighlighting": true,
+    "markdownRendering": true,
+    "realTimeSearch": true
+  }
+}
