@@ -59,21 +59,21 @@
             <div class="welcome-text">
               <p class="highlight">🚀 欢迎来到 AFulcrum 的终端博客！</p>
               <p>输入 <span class="command glow">help</span> 查看可用命令</p>
-              <p class="tip">💡 提示：使用 Tab 键自动补全，↑↓ 键浏览历史</p>
+              <p class="tip">
+                💡 提示：使用 ↑↓ 键浏览历史，Tab 键自动补全，Ctrl+C 中断，Ctrl+L
+                清屏
+              </p>
             </div>
             <hr class="separator" />
           </div>
         </div>
 
         <div class="input-line">
-          <span class="prompt">AFulcrum@blog:~$ </span>
-          <input
-            type="text"
-            id="commandInput"
-            autocomplete="off"
-            spellcheck="false"
-            placeholder="输入命令..."
-          />
+          <span class="prompt"
+            >AFulcrum@blog:<span id="promptPath">~</span>$
+          </span>
+          <span class="cursor-text" id="commandDisplay"></span>
+          <span class="cursor" id="cursor">_</span>
           <div class="command-suggestions" id="suggestions"></div>
         </div>
 

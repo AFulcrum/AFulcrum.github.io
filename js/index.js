@@ -11,6 +11,8 @@ class TerminalBlog {
     this.currentTheme = "green";
     this.suggestions = [];
     this.selectedSuggestion = -1;
+    this.currentCommand = "";
+    this.isTyping = false;
 
     this.commands = {
       help: { desc: "显示帮助信息", usage: "help [command]" },
@@ -22,6 +24,7 @@ class TerminalBlog {
       find: { desc: "搜索文件", usage: "find <pattern>" },
       grep: { desc: "搜索内容", usage: "grep <pattern>" },
       articles: { desc: "显示文章列表", usage: "articles [category]" },
+      docs: { desc: "浏览文档文章", usage: "docs [category]" },
       clear: { desc: "清空终端", usage: "clear" },
       whoami: { desc: "显示用户信息", usage: "whoami" },
       date: { desc: "显示当前时间", usage: "date" },
@@ -40,16 +43,18 @@ class TerminalBlog {
   }
 
   init() {
-    this.input = document.getElementById("commandInput");
+    this.commandDisplay = document.getElementById("commandDisplay");
+    this.cursor = document.getElementById("cursor");
+    this.promptPath = document.getElementById("promptPath");
     this.output = document.getElementById("output");
     this.suggestionsEl = document.getElementById("suggestions");
     this.sessionTimeEl = document.getElementById("session-time");
     this.commandCountEl = document.getElementById("command-count");
     this.currentPathEl = document.getElementById("current-path");
 
-    // 事件监听
-    this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
-    this.input.addEventListener("input", this.handleInput.bind(this));
+    // 全局键盘事件监听
+    document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    document.addEventListener("keypress", this.handleKeyPress.bind(this));
 
     // 主题切换
     document.querySelectorAll(".theme-btn").forEach((btn) => {
@@ -69,16 +74,15 @@ class TerminalBlog {
       .querySelector(".btn.maximize")
       .addEventListener("click", this.maximizeTerminal.bind(this));
 
-    // 聚焦输入框
-    this.focusInput();
+    // 点击终端区域聚焦
     document.addEventListener("click", (e) => {
       if (!this.suggestionsEl.contains(e.target)) {
         this.hideSuggestions();
-        this.focusInput();
       }
     });
 
-    // 欢迎消息
+    // 初始化显示
+    this.updatePrompt();
     this.showWelcomeMessage();
   }
 
@@ -158,7 +162,21 @@ class TerminalBlog {
   }
 
   focusInput() {
-    this.input.focus();
+    // 移除旧的聚焦方法，因为不再需要
+  }
+
+  handleKeyPress(e) {
+    // 只处理可打印字符
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    if (e.key.length === 1) {
+      this.currentCommand += e.key;
+      this.updateDisplay();
+      this.showSuggestions();
+    }
+  }
+
+  updateDisplay() {
+    this.commandDisplay.textContent = this.currentCommand;
   }
 
   handleInput(e) {
@@ -166,7 +184,7 @@ class TerminalBlog {
   }
 
   showSuggestions() {
-    const input = this.input.value.toLowerCase().trim();
+    const input = this.currentCommand.toLowerCase().trim();
     if (!input) {
       this.hideSuggestions();
       return;
@@ -213,9 +231,9 @@ class TerminalBlog {
       }
 
       item.addEventListener("click", () => {
-        this.input.value = suggestion;
+        this.currentCommand = suggestion;
+        this.updateDisplay();
         this.hideSuggestions();
-        this.focusInput();
       });
 
       this.suggestionsEl.appendChild(item);
@@ -252,7 +270,8 @@ class TerminalBlog {
       this.selectedSuggestion >= 0 &&
       this.suggestions[this.selectedSuggestion]
     ) {
-      this.input.value = this.suggestions[this.selectedSuggestion];
+      this.currentCommand = this.suggestions[this.selectedSuggestion];
+      this.updateDisplay();
       this.hideSuggestions();
     }
   }
@@ -263,10 +282,16 @@ class TerminalBlog {
       if (this.selectedSuggestion >= 0) {
         this.selectSuggestion();
       } else {
-        this.executeCommand(this.input.value.trim());
-        this.input.value = "";
+        this.executeCommand(this.currentCommand.trim());
+        this.currentCommand = "";
+        this.updateDisplay();
         this.hideSuggestions();
       }
+    } else if (e.key === "Backspace") {
+      e.preventDefault();
+      this.currentCommand = this.currentCommand.slice(0, -1);
+      this.updateDisplay();
+      this.showSuggestions();
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (this.suggestionsEl.classList.contains("show")) {
@@ -284,7 +309,8 @@ class TerminalBlog {
     } else if (e.key === "Tab") {
       e.preventDefault();
       if (this.suggestions.length > 0) {
-        this.input.value = this.suggestions[0];
+        this.currentCommand = this.suggestions[0];
+        this.updateDisplay();
         this.hideSuggestions();
       }
     } else if (e.key === "Escape") {
@@ -293,7 +319,8 @@ class TerminalBlog {
     } else if (e.ctrlKey && e.key === "c") {
       e.preventDefault();
       this.addOutput("^C", "error");
-      this.input.value = "";
+      this.currentCommand = "";
+      this.updateDisplay();
       this.hideSuggestions();
     } else if (e.ctrlKey && e.key === "l") {
       e.preventDefault();
@@ -302,20 +329,31 @@ class TerminalBlog {
   }
 
   navigateHistory(direction) {
+    if (this.commandHistory.length === 0) return;
+
+    if (direction === "up") {
+      if (this.historyIndex === -1) {
+        this.historyIndex = this.commandHistory.length - 1;
+      } else if (this.historyIndex > 0) {
+        this.historyIndex--;
+      }
+    } else {
+      if (this.historyIndex < this.commandHistory.length - 1) {
+        this.historyIndex++;
+      } else {
+        this.historyIndex = -1;
+        this.currentCommand = "";
+        this.updateDisplay();
+        return;
+      }
+    }
+
     if (
-      direction === "up" &&
-      this.historyIndex < this.commandHistory.length - 1
+      this.historyIndex >= 0 &&
+      this.historyIndex < this.commandHistory.length
     ) {
-      this.historyIndex++;
-      this.input.value =
-        this.commandHistory[this.commandHistory.length - 1 - this.historyIndex];
-    } else if (direction === "down" && this.historyIndex > 0) {
-      this.historyIndex--;
-      this.input.value =
-        this.commandHistory[this.commandHistory.length - 1 - this.historyIndex];
-    } else if (direction === "down" && this.historyIndex === 0) {
-      this.historyIndex = -1;
-      this.input.value = "";
+      this.currentCommand = this.commandHistory[this.historyIndex];
+      this.updateDisplay();
     }
   }
 
@@ -448,6 +486,9 @@ class TerminalBlog {
         case "articles":
           this.showArticles(arg);
           break;
+        case "docs":
+          this.showDocs(arg);
+          break;
         case "history":
           this.showHistory();
           break;
@@ -543,168 +584,168 @@ class TerminalBlog {
     if (specificCommand && this.commands[specificCommand]) {
       const cmd = this.commands[specificCommand];
       const helpText = `
-<div class="help-container">
+<div class="help-list">
   <div class="help-title">📖 ${specificCommand} - 命令详情</div>
-  <div class="help-section">
-    <div style="color: var(--blue); margin-bottom: 10px;"><strong>描述:</strong> ${
-      cmd.desc
-    }</div>
-    <div style="color: var(--yellow); margin-bottom: 10px;"><strong>用法:</strong> ${
-      cmd.usage
-    }</div>
-    <div style="color: var(--purple);"><strong>示例:</strong></div>
-    <div style="color: var(--gray); margin-left: 20px; margin-top: 5px;">
-      ${
-        specificCommand === "cat"
-          ? "cat Blender基础.md"
-          : specificCommand === "cd"
-          ? "cd Document/Blender"
-          : specificCommand === "find"
-          ? "find blender"
-          : specificCommand === "grep"
-          ? "grep 教程"
-          : cmd.usage
-      }
+  
+  <div class="help-grid">
+    <div class="help-section">
+      <div class="section-header">📋 命令信息</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name">描述</span>
+          <span class="command-desc">${cmd.desc}</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">用法</span>
+          <span class="command-desc">${cmd.usage}</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">示例</span>
+          <span class="command-desc">${
+            specificCommand === "cat"
+              ? "cat Document/Blender/Blender基础.md"
+              : specificCommand === "cd"
+              ? "cd Document/Blender"
+              : specificCommand === "find"
+              ? "find blender"
+              : specificCommand === "grep"
+              ? "grep 教程"
+              : cmd.usage
+          }</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-            `;
+  
+  <div class="help-footer">💡 输入 "help" 查看所有命令列表</div>
+</div>`;
       this.addOutput(helpText, "info");
       return;
     }
 
+    // 列表式help显示，包含命令简介
     const helpText = `
-<div class="help-container">
+<div class="help-list">
   <div class="help-title">📖 AFulcrum 终端博客 - 命令帮助</div>
   
-  <div class="help-section">
-    <div class="help-section-title">📁 文件操作</div>
-    <div class="help-commands">
-      <div class="help-command-item">
-        <div class="help-command-name">ls [目录]</div>
-        <div class="help-command-desc">列出文件和目录</div>
+  <div class="help-grid">
+    <div class="help-section">
+      <div class="section-header">📁 文件操作</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('ls')">ls</span>
+          <span class="command-desc">列出目录内容</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('cd')">cd</span>
+          <span class="command-desc">切换目录</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('cat')">cat</span>
+          <span class="command-desc">查看文件内容</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('pwd')">pwd</span>
+          <span class="command-desc">显示当前路径</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('tree')">tree</span>
+          <span class="command-desc">显示目录树结构</span>
+        </div>
       </div>
-      <div class="help-command-item">
-        <div class="help-command-name">cd [目录]</div>
-        <div class="help-command-desc">切换目录</div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">🔍 搜索功能</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('find')">find</span>
+          <span class="command-desc">搜索文件和内容</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('grep')">grep</span>
+          <span class="command-desc">在文件中搜索文本</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('articles')">articles</span>
+          <span class="command-desc">显示文章列表</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('docs')">docs</span>
+          <span class="command-desc">浏览文档文章</span>
+        </div>
       </div>
-      <div class="help-command-item">
-        <div class="help-command-name">cat [文件]</div>
-        <div class="help-command-desc">查看文件内容</div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">🎨 系统功能</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('clear')">clear</span>
+          <span class="command-desc">清除终端屏幕</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('history')">history</span>
+          <span class="command-desc">显示命令历史</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('theme')">theme</span>
+          <span class="command-desc">切换主题颜色</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('neofetch')">neofetch</span>
+          <span class="command-desc">显示系统信息</span>
+        </div>
       </div>
-      <div class="help-command-item">
-        <div class="help-command-name">pwd</div>
-        <div class="help-command-desc">显示当前路径</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">tree</div>
-        <div class="help-command-desc">显示目录树结构</div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">ℹ️ 信息命令</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('help')">help</span>
+          <span class="command-desc">显示命令帮助</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('about')">about</span>
+          <span class="command-desc">关于此博客</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('contact')">contact</span>
+          <span class="command-desc">联系信息</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name" onclick="terminal.executeCommand('whoami')">whoami</span>
+          <span class="command-desc">显示当前用户</span>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="help-section">
-    <div class="help-section-title">🔍 搜索功能</div>
-    <div class="help-commands">
-      <div class="help-command-item">
-        <div class="help-command-name">find [关键词]</div>
-        <div class="help-command-desc">搜索文件名</div>
+  
+  <div class="shortcuts-section">
+    <div class="section-header">⌨️ 快捷键</div>
+    <div class="shortcut-rows">
+      <div class="shortcut-row">
+        <span class="shortcut-key">↑↓</span>
+        <span class="shortcut-desc">浏览历史命令</span>
       </div>
-      <div class="help-command-item">
-        <div class="help-command-name">grep [关键词]</div>
-        <div class="help-command-desc">搜索文章内容</div>
+      <div class="shortcut-row">
+        <span class="shortcut-key">Tab</span>
+        <span class="shortcut-desc">自动补全</span>
       </div>
-      <div class="help-command-item">
-        <div class="help-command-name">articles [类别]</div>
-        <div class="help-command-desc">显示文章列表</div>
+      <div class="shortcut-row">
+        <span class="shortcut-key">Ctrl+C</span>
+        <span class="shortcut-desc">中断命令</span>
       </div>
-    </div>
-  </div>
-
-  <div class="help-section">
-    <div class="help-section-title">🎨 系统功能</div>
-    <div class="help-commands">
-      <div class="help-command-item">
-        <div class="help-command-name">clear</div>
-        <div class="help-command-desc">清空终端 (Ctrl+L)</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">history</div>
-        <div class="help-command-desc">显示命令历史</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">theme [颜色]</div>
-        <div class="help-command-desc">切换主题 (green/blue/purple/orange)</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">neofetch</div>
-        <div class="help-command-desc">显示系统信息</div>
+      <div class="shortcut-row">
+        <span class="shortcut-key">Ctrl+L</span>
+        <span class="shortcut-desc">清屏</span>
       </div>
     </div>
   </div>
-
-  <div class="help-section">
-    <div class="help-section-title">ℹ️ 信息命令</div>
-    <div class="help-commands">
-      <div class="help-command-item">
-        <div class="help-command-name">help [命令]</div>
-        <div class="help-command-desc">显示帮助 (详细: man [命令])</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">about</div>
-        <div class="help-command-desc">关于博客</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">contact</div>
-        <div class="help-command-desc">联系信息</div>
-      </div>
-      <div class="help-command-item">
-        <div class="help-command-name">whoami</div>
-        <div class="help-command-desc">显示用户信息</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="help-section">
-    <div class="help-section-title">⌨️ 快捷键</div>
-    <div class="help-shortcuts">
-      <div class="help-shortcut-item">
-        <div class="help-shortcut-key">↑↓ 键</div>
-        <div class="help-shortcut-desc">浏览命令历史</div>
-      </div>
-      <div class="help-shortcut-item">
-        <div class="help-shortcut-key">Tab 键</div>
-        <div class="help-shortcut-desc">自动补全</div>
-      </div>
-      <div class="help-shortcut-item">
-        <div class="help-shortcut-key">Ctrl+C</div>
-        <div class="help-shortcut-desc">中断命令</div>
-      </div>
-      <div class="help-shortcut-item">
-        <div class="help-shortcut-key">Ctrl+L</div>
-        <div class="help-shortcut-desc">清空屏幕</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="help-section">
-    <div class="help-section-title">🎮 隐藏功能</div>
-    <div class="help-commands">
-      <div class="help-command-item">
-        <div class="help-command-name">easter</div>
-        <div class="help-command-desc">发现彩蛋解锁特殊命令</div>
-      </div>
-    </div>
-    <div style="color: var(--purple); margin-top: 10px; text-align: center; font-style: italic;">
-      试试输入一些有趣的命令... 😉
-    </div>
-  </div>
-
-  <div class="help-footer">
-    💡 提示: 输入 "man [命令]" 获取详细帮助
-  </div>
-</div>
-        `;
+  
+  <div class="help-footer">💡 使用 "help [命令]" 获取详细说明 | 点击命令名查看详情</div>
+</div>`;
     this.addOutput(helpText, "info");
   }
 
@@ -778,7 +819,7 @@ class TerminalBlog {
       return;
     }
 
-    // 显示所有文章
+    // 列表式文章显示
     const allCategories = Object.keys(articlesData);
     const totalArticles = Object.values(articlesData).reduce(
       (sum, articles) => sum + articles.length,
@@ -786,54 +827,268 @@ class TerminalBlog {
     );
 
     let articlesHTML = `
-<div class="articles-container">
-  <div class="articles-title">📚 文章列表 - AFulcrum Blog</div>
+<div class="articles-list-compact">
+  <div class="articles-title">📚 可用文章</div>
+  <div class="articles-stats">共 ${totalArticles} 篇文章，分布在 ${allCategories.length} 个分类中</div>
   
-  <div class="articles-summary">
-    <div class="articles-summary-text">共有 ${allCategories.length} 个分类，${totalArticles} 篇文章</div>
-    <div class="articles-summary-stats">
-      <span class="articles-stat">${allCategories.length} 分类</span>
-      <span class="articles-stat">${totalArticles} 文章</span>
-    </div>
-  </div>
-`;
+  <div class="categories-grid">`;
 
-    // 为每个类别显示文章
     allCategories.forEach((categoryName) => {
-      const categoryArticles = articlesData[categoryName];
-      const categoryIcon = categoryName === "Blender" ? "🎨" : "🔮";
-
+      const articles = articlesData[categoryName];
       articlesHTML += `
-  <div class="articles-category">
-    <div class="articles-category-title">${categoryIcon} ${categoryName} (${categoryArticles.length}篇)</div>
-    <div class="articles-list">`;
+    <div class="category-section">
+      <div class="category-header">
+        <span>${articles[0].icon} ${categoryName}</span>
+        <span class="category-count">${articles.length}</span>
+      </div>
+      <div class="articles-list">`;
 
-      categoryArticles.forEach((article, index) => {
+      articles.forEach((article) => {
         articlesHTML += `
-      <div class="article-item" onclick="terminal.executeCommand('cat ${
-        article.path
-      }')" style="animation-delay: ${index * 0.1}s">
-        <div class="article-icon">${article.icon}</div>
-        <div class="article-info">
-          <div class="article-title">${article.title}</div>
-          <div class="article-path">${article.path}</div>
-        </div>
-        <div class="article-meta">${article.type}</div>
-      </div>`;
+        <div class="article-item" onclick="terminal.executeCommand('cat ${article.path}')">
+          <span class="article-icon">${article.icon}</span>
+          <div class="article-info">
+            <div class="article-title">${article.title}</div>
+            <div class="article-path">${article.path}</div>
+          </div>
+          <span class="article-type">${article.type}</span>
+        </div>`;
       });
 
       articlesHTML += `
-    </div>
-  </div>`;
+      </div>
+    </div>`;
     });
 
     articlesHTML += `
-  <div class="articles-footer">
-    💡 点击文章标题快速查看内容，或使用 "articles [分类]" 查看特定分类
+  </div>
+  
+  <div class="help-footer">
+    💡 点击文章名查看内容 | 使用 "articles [分类]" 查看特定分类
   </div>
 </div>`;
 
     this.addOutput(articlesHTML, "info");
+  }
+
+  showDocs(category) {
+    // 文档结构定义
+    const docsStructure = {
+      Blender: {
+        icon: "🎨",
+        title: "Blender 学习文档",
+        color: "var(--blue)",
+        description: "3D建模、动画制作相关教程",
+        articles: [
+          {
+            title: "Blender基础入门",
+            file: "Blender基础.md",
+            path: "Document/Blender/Blender基础.md",
+            tags: ["基础", "入门", "3D建模"],
+            difficulty: "初级",
+            readTime: "15分钟",
+            lastUpdate: "2024-01-15",
+          },
+        ],
+      },
+      Obsidian: {
+        icon: "🔮",
+        title: "Obsidian 使用指南",
+        color: "var(--purple)",
+        description: "知识管理、笔记组织相关文档",
+        articles: [
+          {
+            title: "Dataview插件详解",
+            file: "Dataview.md",
+            path: "Document/Obsidian/Dataview.md",
+            tags: ["插件", "数据查询", "进阶"],
+            difficulty: "中级",
+            readTime: "20分钟",
+            lastUpdate: "2024-01-10",
+          },
+          {
+            title: "Markdown基础语法",
+            file: "markdown基础语法.md",
+            path: "Document/Obsidian/markdown基础语法.md",
+            tags: ["基础", "语法", "写作"],
+            difficulty: "初级",
+            readTime: "10分钟",
+            lastUpdate: "2024-01-08",
+          },
+          {
+            title: "数学公式写法",
+            file: "数学块.md",
+            path: "Document/Obsidian/数学块.md",
+            tags: ["数学", "LaTeX", "公式"],
+            difficulty: "中级",
+            readTime: "12分钟",
+            lastUpdate: "2024-01-05",
+          },
+        ],
+      },
+    };
+
+    if (category && docsStructure[category]) {
+      // 显示特定分类的文档
+      this.showCategoryDocs(category, docsStructure[category]);
+      return;
+    }
+
+    // 显示所有文档分类
+    const categories = Object.keys(docsStructure);
+    const totalDocs = Object.values(docsStructure).reduce(
+      (sum, cat) => sum + cat.articles.length,
+      0
+    );
+
+    let docsHTML = `
+<div class="help-list">
+  <div class="help-title">📚 文档中心</div>
+  
+  <div style="text-align: center; color: var(--gray); margin-bottom: 20px; padding: 10px; background: rgba(13, 17, 23, 0.5); border-radius: 6px;">
+    共有 ${totalDocs} 篇文档，分布在 ${categories.length} 个分类中
+  </div>
+  
+  <div class="help-grid">`;
+
+    categories.forEach((categoryName) => {
+      const categoryData = docsStructure[categoryName];
+      docsHTML += `
+    <div class="help-section">
+      <div class="section-header" style="color: ${categoryData.color};">
+        ${categoryData.icon} ${categoryData.title}
+      </div>
+      
+      <div style="color: var(--gray); font-size: 12px; margin-bottom: 15px; padding: 8px; background: rgba(0, 0, 0, 0.3); border-radius: 4px;">
+        ${categoryData.description}
+      </div>
+      
+      <div class="command-rows">`;
+
+      categoryData.articles.forEach((article) => {
+        const difficultyColor =
+          article.difficulty === "初级"
+            ? "var(--primary-green)"
+            : article.difficulty === "中级"
+            ? "var(--yellow)"
+            : "var(--red)";
+
+        docsHTML += `
+        <div class="command-row" onclick="terminal.executeCommand('cat ${
+          article.path
+        }')" style="cursor: pointer;">
+          <div style="flex: 1;">
+            <div class="command-name" style="margin-bottom: 4px;">${
+              article.title
+            }</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+              ${article.tags
+                .map(
+                  (tag) =>
+                    `<span style="background: rgba(0, 255, 65, 0.2); color: var(--primary-green); padding: 2px 6px; border-radius: 8px; font-size: 9px;">${tag}</span>`
+                )
+                .join("")}
+            </div>
+            <div style="display: flex; gap: 15px; font-size: 10px; color: var(--gray);">
+              <span>📖 ${article.readTime}</span>
+              <span style="color: ${difficultyColor};">⭐ ${
+          article.difficulty
+        }</span>
+              <span>🕒 ${article.lastUpdate}</span>
+            </div>
+          </div>
+        </div>`;
+      });
+
+      docsHTML += `
+      </div>
+      
+      <div style="text-align: center; margin-top: 10px;">
+        <span class="command-name" onclick="terminal.executeCommand('docs ${categoryName}')" style="cursor: pointer; padding: 6px 12px; background: rgba(0, 255, 65, 0.2); border-radius: 15px; font-size: 11px;">
+          查看更多 ${categoryName} 文档
+        </span>
+      </div>
+    </div>`;
+    });
+
+    docsHTML += `
+  </div>
+  
+  <div class="help-footer">
+    💡 点击文档标题阅读 | 使用 "docs [分类]" 查看特定分类 | "cat [路径]" 直接阅读
+  </div>
+</div>`;
+
+    this.addOutput(docsHTML, "info");
+  }
+
+  showCategoryDocs(categoryName, categoryData) {
+    let docsHTML = `
+<div class="help-list">
+  <div class="help-title" style="color: ${categoryData.color};">
+    ${categoryData.icon} ${categoryData.title}
+  </div>
+  
+  <div style="text-align: center; color: var(--gray); margin-bottom: 20px; padding: 12px; background: rgba(13, 17, 23, 0.7); border-radius: 6px; line-height: 1.5;">
+    ${categoryData.description}<br>
+    <small>共 ${categoryData.articles.length} 篇文档</small>
+  </div>
+  
+  <div class="help-grid">
+    <div class="help-section">
+      <div class="section-header">📖 文档列表</div>
+      <div class="command-rows">`;
+
+    categoryData.articles.forEach((article, index) => {
+      const difficultyColor =
+        article.difficulty === "初级"
+          ? "var(--primary-green)"
+          : article.difficulty === "中级"
+          ? "var(--yellow)"
+          : "var(--red)";
+
+      docsHTML += `
+      <div class="command-row" onclick="terminal.executeCommand('cat ${
+        article.path
+      }')" style="cursor: pointer; animation-delay: ${index * 0.1}s;">
+        <div style="flex: 1;">
+          <div class="command-name" style="margin-bottom: 6px; color: ${
+            categoryData.color
+          };">
+            📄 ${article.title}
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+            ${article.tags
+              .map(
+                (tag) =>
+                  `<span style="background: rgba(0, 255, 65, 0.2); color: ${categoryData.color}; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: bold;">${tag}</span>`
+              )
+              .join("")}
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--gray);">
+            <div style="display: flex; gap: 15px;">
+              <span>📖 ${article.readTime}</span>
+              <span style="color: ${difficultyColor};">⭐ ${
+        article.difficulty
+      }</span>
+            </div>
+            <span>🕒 ${article.lastUpdate}</span>
+          </div>
+        </div>
+      </div>`;
+    });
+
+    docsHTML += `
+      </div>
+    </div>
+  </div>
+  
+  <div class="help-footer">
+    💡 点击文档标题开始阅读 | 输入 "docs" 返回分类列表
+  </div>
+</div>`;
+
+    this.addOutput(docsHTML, "info");
   }
 
   showCategoryArticles(categoryName, articles) {
@@ -878,77 +1133,218 @@ class TerminalBlog {
 
   showAbout() {
     const aboutText = `
-<span style="color: var(--blue); font-size: 18px;">🚀 AFulcrum 的终端博客</span>
-
-<span style="color: var(--yellow);">版本:</span> v2.0 Enhanced
-<span style="color: var(--yellow);">作者:</span> AFulcrum
-<span style="color: var(--yellow);">技术栈:</span> HTML5, CSS3, Vanilla JavaScript
-<span style="color: var(--yellow);">主题:</span> Linux 终端风格
-
-<span style="color: var(--yellow);">特性:</span>
-  ✨ 真实的终端体验
-  🎨 多主题支持
-  📱 响应式设计
-  ⚡ 快速搜索
-  🔧 命令补全
-  📚 Markdown 文章支持
-
-这是一个独特的博客项目，模拟真实的 Linux 终端环境，
-让技术爱好者能够用熟悉的命令行方式浏览文章内容。
-
-<span style="color: var(--gray);">输入 "contact" 查看联系方式</span>
-        `;
+<div class="help-list">
+  <div class="help-title">🚀 关于 AFulcrum 的终端博客</div>
+  
+  <div class="help-grid">
+    <div class="help-section">
+      <div class="section-header">📋 基本信息</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name">版本</span>
+          <span class="command-desc">v2.0 Enhanced</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">作者</span>
+          <span class="command-desc">AFulcrum</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">技术栈</span>
+          <span class="command-desc">HTML5, CSS3, Vanilla JavaScript</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">主题风格</span>
+          <span class="command-desc">Linux 终端模拟</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">✨ 特色功能</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name">终端体验</span>
+          <span class="command-desc">真实的Linux命令行操作感受</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">多主题支持</span>
+          <span class="command-desc">绿色/蓝色/紫色/橙色主题切换</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">响应式设计</span>
+          <span class="command-desc">完美适配桌面端和移动端</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">智能搜索</span>
+          <span class="command-desc">快速搜索文章和内容</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">命令补全</span>
+          <span class="command-desc">Tab键智能补全命令和路径</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">Markdown支持</span>
+          <span class="command-desc">完整的Markdown文章渲染</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">🎯 项目介绍</div>
+      <div style="color: var(--gray); padding: 15px; background: rgba(13, 17, 23, 0.5); border-radius: 6px; line-height: 1.6; font-size: 13px;">
+        这是一个独特的博客项目，完全模拟真实的Linux终端环境。
+        技术爱好者可以用熟悉的命令行方式浏览文章内容，
+        体验原汁原味的终端操作感受。项目采用纯前端技术栈，
+        无需后端支持，部署简单，性能优异。
+      </div>
+    </div>
+  </div>
+  
+  <div class="help-footer">💡 输入 "contact" 查看联系方式 | "help" 查看命令帮助</div>
+</div>`;
     this.addOutput(aboutText, "info");
   }
 
   showContact() {
     const contactText = `
-<span style="color: var(--blue); font-size: 16px;">📞 联系信息</span>
-
-<span style="color: var(--yellow);">GitHub:</span> https://github.com/AFulcrum
-<span style="color: var(--yellow);">博客:</span> https://afulcrum.github.io
-<span style="color: var(--yellow);">邮箱:</span> 请通过 GitHub 联系
-
-<span style="color: var(--yellow);">项目地址:</span> https://github.com/AFulcrum/AFulcrum.github.io
-
-欢迎提交 Issue 和 Pull Request！
-如果你喜欢这个项目，请给个 ⭐ Star！
-        `;
+<div class="help-list">
+  <div class="help-title">📞 联系信息</div>
+  
+  <div class="help-grid">
+    <div class="help-section">
+      <div class="section-header">� 在线链接</div>
+      <div class="command-rows">
+        <div class="command-row">
+          <span class="command-name">GitHub</span>
+          <span class="command-desc">https://github.com/AFulcrum</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">博客主页</span>
+          <span class="command-desc">https://afulcrum.github.io</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">项目地址</span>
+          <span class="command-desc">https://github.com/AFulcrum/AFulcrum.github.io</span>
+        </div>
+        <div class="command-row">
+          <span class="command-name">邮箱联系</span>
+          <span class="command-desc">请通过 GitHub 联系</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="help-section">
+      <div class="section-header">🤝 参与贡献</div>
+      <div style="color: var(--gray); padding: 15px; background: rgba(13, 17, 23, 0.5); border-radius: 6px; line-height: 1.6; font-size: 13px;">
+        欢迎提交 Issue 和 Pull Request！<br>
+        如果你喜欢这个项目，请给个 ⭐ Star！<br>
+        有任何建议或问题，都可以通过 GitHub 联系我。
+      </div>
+    </div>
+  </div>
+  
+  <div class="help-footer">💡 感谢你的关注和支持！</div>
+</div>`;
     this.addOutput(contactText, "info");
   }
 
   showNeofetch() {
     const neofetchText = `
-<span style="color: var(--blue);">                   -\`</span>                <span style="color: var(--yellow);">AFulcrum</span>@<span style="color: var(--blue);">terminal-blog</span>
-<span style="color: var(--blue);">                  .o+\`</span>               <span style="color: var(--gray);">─────────────────────────</span>
-<span style="color: var(--blue);">                 \`ooo/</span>               <span style="color: var(--yellow);">OS:</span> Terminal Blog v2.0
-<span style="color: var(--blue);">                \`+oooo:</span>              <span style="color: var(--yellow);">Host:</span> ${
-      navigator.userAgent.split(" ")[0]
-    }
-<span style="color: var(--blue);">               \`+oooooo:</span>             <span style="color: var(--yellow);">Kernel:</span> JavaScript Engine
-<span style="color: var(--blue);">               -+oooooo+:</span>            <span style="color: var(--yellow);">Uptime:</span> ${this.getUptime()}
-<span style="color: var(--blue);">             \`/:-:++oooo+:</span>           <span style="color: var(--yellow);">Shell:</span> AFulcrum Terminal
-<span style="color: var(--blue);">            \`/++++/+++++++:</span>          <span style="color: var(--yellow);">Resolution:</span> ${
-      window.screen.width
-    }x${window.screen.height}
-<span style="color: var(--blue);">           \`/++++++++++++++:</span>         <span style="color: var(--yellow);">Theme:</span> ${
-      this.currentTheme
-    }
-<span style="color: var(--blue);">          \`/+++ooooooooooooo/\`</span>       <span style="color: var(--yellow);">Icons:</span> Terminal Emoji
-<span style="color: var(--blue);">         ./ooosssso++osssssso+\`</span>      <span style="color: var(--yellow);">Terminal:</span> Web Terminal
-<span style="color: var(--blue);">        .oossssso-\`\`\`\`/ossssss+\`</span>     <span style="color: var(--yellow);">CPU:</span> ${
-      navigator.hardwareConcurrency || "Unknown"
-    } cores
-<span style="color: var(--blue);">       -osssssso.      :ssssssso.</span>    <span style="color: var(--yellow);">Memory:</span> ${
-      navigator.deviceMemory || "Unknown"
-    } GB
-<span style="color: var(--blue);">      :osssssss/        osssso+++.</span>   <span style="color: var(--yellow);">Articles:</span> ${
-      Object.keys(this.articles).length || 5
-    }
-<span style="color: var(--blue);">     /ossssssss/        +ssssooo/-</span>   <span style="color: var(--yellow);">Commands:</span> ${
-      this.commandCount
-    }
-        `;
+<div class="neofetch-list">
+  <div class="neofetch-title">💻 系统信息 - neofetch</div>
+  
+  <div class="system-grid">
+    <div class="system-section">
+      <div class="system-header">🖥️ 系统信息</div>
+      <div class="system-info">
+        <div class="info-item">
+          <span class="info-label">用户</span>
+          <span class="info-value">AFulcrum@terminal-blog</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">系统</span>
+          <span class="info-value">Terminal Blog v2.0</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">内核</span>
+          <span class="info-value">JavaScript Engine</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">运行时间</span>
+          <span class="info-value">${this.getUptime()}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="system-section">
+      <div class="system-header">🎨 显示信息</div>
+      <div class="system-info">
+        <div class="info-item">
+          <span class="info-label">分辨率</span>
+          <span class="info-value">${window.screen.width}x${
+      window.screen.height
+    }</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">主题</span>
+          <span class="info-value">${this.currentTheme}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">终端</span>
+          <span class="info-value">Web Terminal</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">图标</span>
+          <span class="info-value">Terminal Emoji</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="system-section">
+      <div class="system-header">⚡ 性能信息</div>
+      <div class="system-info">
+        <div class="info-item">
+          <span class="info-label">CPU核心</span>
+          <span class="info-value">${
+            navigator.hardwareConcurrency || "未知"
+          } 核</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">内存</span>
+          <span class="info-value">${navigator.deviceMemory || "未知"} GB</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">浏览器</span>
+          <span class="info-value">${navigator.userAgent.split(" ")[0]}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="system-section">
+      <div class="system-header">📊 使用统计</div>
+      <div class="system-info">
+        <div class="info-item">
+          <span class="info-label">会话时间</span>
+          <span class="info-value">${this.getUptime()}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">执行命令</span>
+          <span class="info-value">${this.commandCount}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">文章数量</span>
+          <span class="info-value">${
+            Object.keys(this.articles).length || 5
+          }</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="status-footer">
+    💡 系统运行正常 | 所有功能可用 | 输入 "help" 查看命令列表
+  </div>
+</div>`;
     this.addOutput(neofetchText, "info");
   }
 
@@ -1055,10 +1451,8 @@ class TerminalBlog {
   }
 
   updatePrompt() {
-    const prompt = document.querySelector(".prompt");
-    const inputLine = document.querySelector(".input-line .prompt");
-    if (inputLine) {
-      inputLine.textContent = `AFulcrum@blog:${this.currentPath}$ `;
+    if (this.promptPath) {
+      this.promptPath.textContent = this.currentPath;
     }
   }
 
