@@ -13,6 +13,7 @@ class TerminalBlog {
     this.selectedSuggestion = -1;
     this.currentCommand = "";
     this.isTyping = false;
+    this.isInputFocused = true; // 添加输入焦点追踪
 
     this.commands = {
       help: { desc: "显示帮助信息", usage: "help [command]" },
@@ -74,10 +75,43 @@ class TerminalBlog {
       .querySelector(".btn.maximize")
       .addEventListener("click", this.maximizeTerminal.bind(this));
 
-    // 点击终端区域聚焦
+    // 点击终端区域聚焦和建议管理
     document.addEventListener("click", (e) => {
+      const inputLine = document.querySelector(".input-line");
+      const terminal = document.querySelector(".terminal-body");
+
+      // 检查是否点击在输入区域附近
+      if (inputLine && inputLine.contains(e.target)) {
+        this.isInputFocused = true;
+        if (this.currentCommand.trim()) {
+          this.showSuggestions();
+        }
+      } else if (terminal && terminal.contains(e.target)) {
+        this.isInputFocused = true;
+      } else {
+        this.isInputFocused = false;
+        this.hideSuggestions();
+      }
+
       if (!this.suggestionsEl.contains(e.target)) {
         this.hideSuggestions();
+      }
+    });
+
+    // 鼠标移动事件优化
+    document.addEventListener("mousemove", (e) => {
+      const inputLine = document.querySelector(".input-line");
+      if (inputLine) {
+        const rect = inputLine.getBoundingClientRect();
+        const distance = Math.min(
+          Math.abs(e.clientY - rect.top),
+          Math.abs(e.clientY - rect.bottom)
+        );
+
+        // 如果鼠标距离输入行太近，暂时隐藏建议
+        if (distance < 30 && !inputLine.contains(e.target)) {
+          this.hideSuggestions();
+        }
       }
     });
 
@@ -185,7 +219,9 @@ class TerminalBlog {
 
   showSuggestions() {
     const input = this.currentCommand.toLowerCase().trim();
-    if (!input) {
+
+    // 只有在输入内容且光标在输入框内时才显示建议
+    if (!input || input.length < 1) {
       this.hideSuggestions();
       return;
     }
@@ -202,9 +238,9 @@ class TerminalBlog {
     const allItems = [...commands, ...directories, ...files];
     this.suggestions = allItems
       .filter((item) => item.toLowerCase().includes(input))
-      .slice(0, 8);
+      .slice(0, 6); // 减少显示数量
 
-    if (this.suggestions.length > 0) {
+    if (this.suggestions.length > 0 && this.isInputFocused) {
       this.renderSuggestions();
     } else {
       this.hideSuggestions();
@@ -623,106 +659,87 @@ class TerminalBlog {
       return;
     }
 
-    // 列表式help显示，包含命令简介
+    // 列表式help显示，包含命令简介和滚动索引
+    const commandCategories = {
+      文件操作: {
+        icon: "📁",
+        color: "var(--primary-green)",
+        commands: [
+          { name: "ls", desc: "列出目录内容" },
+          { name: "cd", desc: "切换目录" },
+          { name: "cat", desc: "查看文件内容" },
+          { name: "pwd", desc: "显示当前路径" },
+          { name: "tree", desc: "显示目录树结构" },
+        ],
+      },
+      搜索功能: {
+        icon: "🔍",
+        color: "var(--blue)",
+        commands: [
+          { name: "find", desc: "搜索文件和内容" },
+          { name: "grep", desc: "在文件中搜索文本" },
+          { name: "articles", desc: "显示文章列表" },
+          { name: "docs", desc: "浏览文档文章" },
+        ],
+      },
+      系统功能: {
+        icon: "🎨",
+        color: "var(--yellow)",
+        commands: [
+          { name: "clear", desc: "清除终端屏幕" },
+          { name: "history", desc: "显示命令历史" },
+          { name: "theme", desc: "切换主题颜色" },
+          { name: "neofetch", desc: "显示系统信息" },
+        ],
+      },
+      信息命令: {
+        icon: "ℹ️",
+        color: "var(--purple)",
+        commands: [
+          { name: "help", desc: "显示命令帮助" },
+          { name: "about", desc: "关于此博客" },
+          { name: "contact", desc: "联系信息" },
+          { name: "whoami", desc: "显示当前用户" },
+        ],
+      },
+    };
+
+    const totalCommands = Object.values(commandCategories).reduce(
+      (sum, cat) => sum + cat.commands.length,
+      0
+    );
+
     const helpText = `
-<div class="help-list">
+<div class="help-list" id="help-top">
   <div class="help-title">📖 AFulcrum 终端博客 - 命令帮助</div>
   
   <div class="help-grid">
-    <div class="help-section">
-      <div class="section-header">📁 文件操作</div>
+    ${Object.entries(commandCategories)
+      .map(
+        ([categoryName, categoryData]) => `
+    <div class="help-section" id="help-category-${categoryName}">
+      <div class="section-header" style="color: ${categoryData.color};">
+        ${categoryData.icon} ${categoryName}
+      </div>
       <div class="command-rows">
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('ls')">ls</span>
-          <span class="command-desc">列出目录内容</span>
+        ${categoryData.commands
+          .map(
+            (cmd) => `
+        <div class="command-row" data-command="${cmd.name}">
+          <span class="command-name">${cmd.name}</span>
+          <span class="command-desc">${cmd.desc}</span>
         </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('cd')">cd</span>
-          <span class="command-desc">切换目录</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('cat')">cat</span>
-          <span class="command-desc">查看文件内容</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('pwd')">pwd</span>
-          <span class="command-desc">显示当前路径</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('tree')">tree</span>
-          <span class="command-desc">显示目录树结构</span>
-        </div>
+        `
+          )
+          .join("")}
       </div>
     </div>
-    
-    <div class="help-section">
-      <div class="section-header">🔍 搜索功能</div>
-      <div class="command-rows">
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('find')">find</span>
-          <span class="command-desc">搜索文件和内容</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('grep')">grep</span>
-          <span class="command-desc">在文件中搜索文本</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('articles')">articles</span>
-          <span class="command-desc">显示文章列表</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('docs')">docs</span>
-          <span class="command-desc">浏览文档文章</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="help-section">
-      <div class="section-header">🎨 系统功能</div>
-      <div class="command-rows">
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('clear')">clear</span>
-          <span class="command-desc">清除终端屏幕</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('history')">history</span>
-          <span class="command-desc">显示命令历史</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('theme')">theme</span>
-          <span class="command-desc">切换主题颜色</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('neofetch')">neofetch</span>
-          <span class="command-desc">显示系统信息</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="help-section">
-      <div class="section-header">ℹ️ 信息命令</div>
-      <div class="command-rows">
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('help')">help</span>
-          <span class="command-desc">显示命令帮助</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('about')">about</span>
-          <span class="command-desc">关于此博客</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('contact')">contact</span>
-          <span class="command-desc">联系信息</span>
-        </div>
-        <div class="command-row">
-          <span class="command-name" onclick="terminal.executeCommand('whoami')">whoami</span>
-          <span class="command-desc">显示当前用户</span>
-        </div>
-      </div>
-    </div>
+    `
+      )
+      .join("")}
   </div>
   
-  <div class="shortcuts-section">
+  <div class="shortcuts-section" id="help-shortcuts">
     <div class="section-header">⌨️ 快捷键</div>
     <div class="shortcut-rows">
       <div class="shortcut-row">
@@ -744,9 +761,14 @@ class TerminalBlog {
     </div>
   </div>
   
-  <div class="help-footer">💡 使用 "help [命令]" 获取详细说明 | 点击命令名查看详情</div>
+  <div class="help-footer">💡 使用 "help [命令]" 获取详细说明 | 点击命令名直接执行</div>
 </div>`;
+
+    // 显示主要内容
     this.addOutput(helpText, "info");
+
+    // 创建浮动索引
+    this.createFloatingIndex("help", commandCategories, totalCommands);
   }
 
   showHistory() {
@@ -758,6 +780,267 @@ class TerminalBlog {
 
     this.commandHistory.slice(0, 20).forEach((cmd, index) => {
       this.addOutput(`  ${this.commandHistory.length - index}: ${cmd}`, "file");
+    });
+  }
+
+  createFloatingIndex(type, categories, totalCount) {
+    // 移除已存在的浮动索引
+    const existingIndex = document.querySelector(".floating-index");
+    if (existingIndex) {
+      existingIndex.remove();
+    }
+
+    // 创建浮动索引容器
+    const floatingIndex = document.createElement("div");
+    floatingIndex.className = "floating-index";
+    floatingIndex.innerHTML = `
+      <div class="floating-index-header">
+        <div class="floating-index-title">📖 ${
+          type === "help" ? "命令导航" : "文档导航"
+        }</div>
+        <div class="floating-index-close" onclick="this.parentElement.parentElement.remove()">✕</div>
+      </div>
+      
+      <div class="floating-index-stats">
+        ${totalCount} 个${type === "help" ? "命令" : "文档"} | ${
+      Object.keys(categories).length
+    } 个分类
+      </div>
+      
+      <div class="floating-index-content">
+        ${Object.entries(categories)
+          .map(
+            ([categoryName, categoryData]) => `
+        <div class="floating-index-category">
+          <div class="floating-index-category-title" onclick="document.getElementById('${type}-category-${categoryName}').scrollIntoView({behavior: 'smooth'})" style="color: ${
+              categoryData.color
+            };">
+            ${categoryData.icon} ${
+              type === "help" ? categoryName : categoryData.title
+            }
+          </div>
+          <div class="floating-index-items">
+            ${(type === "help"
+              ? categoryData.commands
+              : categoryData.articles || []
+            )
+              .map(
+                (item, index) => `
+            <div class="floating-index-item" onclick="${
+              type === "help"
+                ? `terminal.executeCommand('${item.name}')`
+                : `document.getElementById('article-${index}') ? document.getElementById('article-${index}').scrollIntoView({behavior: 'smooth'}) : terminal.executeCommand('cat ${item.path}')`
+            }">
+              <div class="floating-index-item-name">${
+                type === "help" ? item.name : item.title
+              }</div>
+              <div class="floating-index-item-desc">${
+                type === "help"
+                  ? item.desc
+                  : item.difficulty + " • " + item.readTime
+              }</div>
+            </div>
+            `
+              )
+              .join("")}
+          </div>
+        </div>`
+          )
+          .join("")}
+      </div>
+      
+      <div class="floating-index-actions">
+        <div class="floating-index-btn" onclick="document.getElementById('${type}-top').scrollIntoView({behavior: 'smooth'})">
+          ⬆️ 回到顶部
+        </div>
+        ${
+          type === "help"
+            ? `
+        <div class="floating-index-btn" onclick="document.getElementById('${type}-shortcuts').scrollIntoView({behavior: 'smooth'})">
+          ⌨️ 快捷键
+        </div>
+        <div class="floating-index-btn" onclick="terminal.executeCommand('docs')">
+          📚 查看文档
+        </div>
+        `
+            : `
+        <div class="floating-index-btn" onclick="terminal.executeCommand('help')">
+          📖 查看命令
+        </div>
+        `
+        }
+      </div>
+    `;
+
+    // 添加到页面
+    document.body.appendChild(floatingIndex);
+
+    // 添加拖拽功能
+    this.makeFloatingIndexDraggable(floatingIndex);
+  }
+
+  makeFloatingIndexDraggable(element) {
+    const header = element.querySelector(".floating-index-header");
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+
+    // 防止文本选择
+    header.style.userSelect = "none";
+    header.style.webkitUserSelect = "none";
+
+    header.addEventListener("mousedown", (e) => {
+      // 只有点击在空白区域或标题文字上才开始拖拽
+      if (e.target.classList.contains("floating-index-close")) {
+        return;
+      }
+
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = parseInt(window.getComputedStyle(element).left) || 0;
+      startTop = parseInt(window.getComputedStyle(element).top) || 0;
+
+      element.style.cursor = "grabbing";
+      header.style.cursor = "grabbing";
+      element.style.transition = "none";
+
+      // 提高z-index确保在拖拽时处于最顶层
+      element.style.zIndex = "10000";
+
+      e.preventDefault();
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+
+      const newLeft = startLeft + e.clientX - startX;
+      const newTop = startTop + e.clientY - startY;
+
+      // 边界检查 - 留出一些边距
+      const margin = 10;
+      const maxLeft = window.innerWidth - element.offsetWidth - margin;
+      const maxTop = window.innerHeight - element.offsetHeight - margin;
+
+      element.style.left = Math.max(margin, Math.min(newLeft, maxLeft)) + "px";
+      element.style.top = Math.max(margin, Math.min(newTop, maxTop)) + "px";
+
+      e.preventDefault();
+    });
+
+    document.addEventListener("mouseup", () => {
+      if (isDragging) {
+        isDragging = false;
+        element.style.cursor = "default";
+        header.style.cursor = "grab";
+        element.style.transition = "all 0.3s ease";
+        element.style.zIndex = "9999";
+      }
+    });
+
+    // 触摸设备支持
+    header.addEventListener("touchstart", (e) => {
+      if (e.target.classList.contains("floating-index-close")) {
+        return;
+      }
+
+      const touch = e.touches[0];
+      isDragging = true;
+      startX = touch.clientX;
+      startY = touch.clientY;
+      startLeft = parseInt(window.getComputedStyle(element).left) || 0;
+      startTop = parseInt(window.getComputedStyle(element).top) || 0;
+
+      element.style.transition = "none";
+      element.style.zIndex = "10000";
+
+      e.preventDefault();
+    });
+
+    header.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+
+      const touch = e.touches[0];
+      const newLeft = startLeft + touch.clientX - startX;
+      const newTop = startTop + touch.clientY - startY;
+
+      const margin = 10;
+      const maxLeft = window.innerWidth - element.offsetWidth - margin;
+      const maxTop = window.innerHeight - element.offsetHeight - margin;
+
+      element.style.left = Math.max(margin, Math.min(newLeft, maxLeft)) + "px";
+      element.style.top = Math.max(margin, Math.min(newTop, maxTop)) + "px";
+
+      e.preventDefault();
+    });
+
+    header.addEventListener("touchend", () => {
+      if (isDragging) {
+        isDragging = false;
+        element.style.transition = "all 0.3s ease";
+        element.style.zIndex = "9999";
+      }
+    });
+
+    header.style.cursor = "grab";
+  }
+
+  addCommandClickHandlers() {
+    // 使用事件委托处理所有命令点击
+    document.addEventListener("click", (e) => {
+      // 处理命令行点击
+      const commandRow = e.target.closest(".command-row[data-command]");
+      if (commandRow) {
+        const command = commandRow.getAttribute("data-command");
+        if (command) {
+          this.executeCommand(command);
+          return;
+        }
+      }
+
+      // 处理浮动索引中的命令点击
+      const floatingItem = e.target.closest(".floating-index-item");
+      if (floatingItem) {
+        const onclick = floatingItem.getAttribute("onclick");
+        if (onclick) {
+          // 执行onclick中的命令
+          if (onclick.includes("terminal.executeCommand")) {
+            const commandMatch = onclick.match(
+              /terminal\.executeCommand\(['"]([^'"]+)['"]\)/
+            );
+            if (commandMatch) {
+              this.executeCommand(commandMatch[1]);
+            }
+          } else if (onclick.includes("scrollIntoView")) {
+            // 执行滚动操作
+            eval(onclick);
+          }
+          return;
+        }
+      }
+
+      // 处理文档和文章点击
+      const articleItem = e.target.closest(".article-item[onclick]");
+      if (articleItem) {
+        const onclick = articleItem.getAttribute("onclick");
+        if (onclick && onclick.includes("terminal.executeCommand")) {
+          const commandMatch = onclick.match(
+            /terminal\.executeCommand\(['"]([^'"]+)['"]\)/
+          );
+          if (commandMatch) {
+            this.executeCommand(commandMatch[1]);
+          }
+        }
+        return;
+      }
+
+      // 处理其他带有data-command的元素
+      const dataCommand = e.target.closest("[data-command]");
+      if (dataCommand) {
+        const command = dataCommand.getAttribute("data-command");
+        if (command) {
+          this.executeCommand(command);
+        }
+      }
     });
   }
 
@@ -941,20 +1224,20 @@ class TerminalBlog {
       0
     );
 
-    let docsHTML = `
-<div class="help-list">
+    const docsHTML = `
+<div class="help-list" id="docs-top">
   <div class="help-title">📚 文档中心</div>
   
   <div style="text-align: center; color: var(--gray); margin-bottom: 20px; padding: 10px; background: rgba(13, 17, 23, 0.5); border-radius: 6px;">
     共有 ${totalDocs} 篇文档，分布在 ${categories.length} 个分类中
   </div>
   
-  <div class="help-grid">`;
-
-    categories.forEach((categoryName) => {
-      const categoryData = docsStructure[categoryName];
-      docsHTML += `
-    <div class="help-section">
+  <div class="help-grid">
+    ${categories
+      .map((categoryName) => {
+        const categoryData = docsStructure[categoryName];
+        return `
+    <div class="help-section" id="docs-category-${categoryName}">
       <div class="section-header" style="color: ${categoryData.color};">
         ${categoryData.icon} ${categoryData.title}
       </div>
@@ -963,17 +1246,17 @@ class TerminalBlog {
         ${categoryData.description}
       </div>
       
-      <div class="command-rows">`;
+      <div class="command-rows">
+        ${categoryData.articles
+          .map((article) => {
+            const difficultyColor =
+              article.difficulty === "初级"
+                ? "var(--primary-green)"
+                : article.difficulty === "中级"
+                ? "var(--yellow)"
+                : "var(--red)";
 
-      categoryData.articles.forEach((article) => {
-        const difficultyColor =
-          article.difficulty === "初级"
-            ? "var(--primary-green)"
-            : article.difficulty === "中级"
-            ? "var(--yellow)"
-            : "var(--red)";
-
-        docsHTML += `
+            return `
         <div class="command-row" onclick="terminal.executeCommand('cat ${
           article.path
         }')" style="cursor: pointer;">
@@ -992,15 +1275,14 @@ class TerminalBlog {
             <div style="display: flex; gap: 15px; font-size: 10px; color: var(--gray);">
               <span>📖 ${article.readTime}</span>
               <span style="color: ${difficultyColor};">⭐ ${
-          article.difficulty
-        }</span>
+              article.difficulty
+            }</span>
               <span>🕒 ${article.lastUpdate}</span>
             </div>
           </div>
         </div>`;
-      });
-
-      docsHTML += `
+          })
+          .join("")}
       </div>
       
       <div style="text-align: center; margin-top: 10px;">
@@ -1009,9 +1291,8 @@ class TerminalBlog {
         </span>
       </div>
     </div>`;
-    });
-
-    docsHTML += `
+      })
+      .join("")}
   </div>
   
   <div class="help-footer">
@@ -1019,12 +1300,16 @@ class TerminalBlog {
   </div>
 </div>`;
 
+    // 显示主要内容
     this.addOutput(docsHTML, "info");
+
+    // 创建浮动索引
+    this.createFloatingIndex("docs", docsStructure, totalDocs);
   }
 
   showCategoryDocs(categoryName, categoryData) {
-    let docsHTML = `
-<div class="help-list">
+    const docsHTML = `
+<div class="help-list" id="category-docs-top">
   <div class="help-title" style="color: ${categoryData.color};">
     ${categoryData.icon} ${categoryData.title}
   </div>
@@ -1037,20 +1322,22 @@ class TerminalBlog {
   <div class="help-grid">
     <div class="help-section">
       <div class="section-header">📖 文档列表</div>
-      <div class="command-rows">`;
+      <div class="command-rows">
+        ${categoryData.articles
+          .map((article, index) => {
+            const difficultyColor =
+              article.difficulty === "初级"
+                ? "var(--primary-green)"
+                : article.difficulty === "中级"
+                ? "var(--yellow)"
+                : "var(--red)";
 
-    categoryData.articles.forEach((article, index) => {
-      const difficultyColor =
-        article.difficulty === "初级"
-          ? "var(--primary-green)"
-          : article.difficulty === "中级"
-          ? "var(--yellow)"
-          : "var(--red)";
-
-      docsHTML += `
-      <div class="command-row" onclick="terminal.executeCommand('cat ${
-        article.path
-      }')" style="cursor: pointer; animation-delay: ${index * 0.1}s;">
+            return `
+      <div class="command-row" id="article-${index}" onclick="terminal.executeCommand('cat ${
+              article.path
+            }')" style="cursor: pointer; animation-delay: ${
+              index * 0.1
+            }s; scroll-margin-top: 20px;">
         <div style="flex: 1;">
           <div class="command-name" style="margin-bottom: 6px; color: ${
             categoryData.color
@@ -1069,16 +1356,15 @@ class TerminalBlog {
             <div style="display: flex; gap: 15px;">
               <span>📖 ${article.readTime}</span>
               <span style="color: ${difficultyColor};">⭐ ${
-        article.difficulty
-      }</span>
+              article.difficulty
+            }</span>
             </div>
             <span>🕒 ${article.lastUpdate}</span>
           </div>
         </div>
       </div>`;
-    });
-
-    docsHTML += `
+          })
+          .join("")}
       </div>
     </div>
   </div>
@@ -1088,7 +1374,16 @@ class TerminalBlog {
   </div>
 </div>`;
 
+    // 显示主要内容
     this.addOutput(docsHTML, "info");
+
+    // 创建分类专用的浮动索引
+    const categoryStructure = { [categoryName]: categoryData };
+    this.createFloatingIndex(
+      "docs",
+      categoryStructure,
+      categoryData.articles.length
+    );
   }
 
   showCategoryArticles(categoryName, articles) {
@@ -1212,19 +1507,19 @@ class TerminalBlog {
   
   <div class="help-grid">
     <div class="help-section">
-      <div class="section-header">� 在线链接</div>
+      <div class="section-header">🔗 在线链接</div>
       <div class="command-rows">
         <div class="command-row">
           <span class="command-name">GitHub</span>
-          <span class="command-desc">https://github.com/AFulcrum</span>
+          <span class="command-desc contact-link">https://github.com/AFulcrum</span>
         </div>
         <div class="command-row">
           <span class="command-name">博客主页</span>
-          <span class="command-desc">https://afulcrum.github.io</span>
+          <span class="command-desc contact-link">https://afulcrum.github.io</span>
         </div>
         <div class="command-row">
           <span class="command-name">项目地址</span>
-          <span class="command-desc">https://github.com/AFulcrum/AFulcrum.github.io</span>
+          <span class="command-desc contact-link">https://github.com/AFulcrum/AFulcrum.github.io</span>
         </div>
         <div class="command-row">
           <span class="command-name">邮箱联系</span>
@@ -1235,7 +1530,7 @@ class TerminalBlog {
     
     <div class="help-section">
       <div class="section-header">🤝 参与贡献</div>
-      <div style="color: var(--gray); padding: 15px; background: rgba(13, 17, 23, 0.5); border-radius: 6px; line-height: 1.6; font-size: 13px;">
+      <div class="contact-contribution">
         欢迎提交 Issue 和 Pull Request！<br>
         如果你喜欢这个项目，请给个 ⭐ Star！<br>
         有任何建议或问题，都可以通过 GitHub 联系我。
@@ -1461,7 +1756,38 @@ class TerminalBlog {
   }
 
   clearScreen() {
-    this.output.innerHTML = "";
+    // 保存初始的欢迎界面
+    const welcomeMessage = `
+      <div class="welcome-message">
+        <pre class="ascii-art">
+    ___    ______      __                          
+   /   |  / ____/_  __/ /____________  ______ ___ 
+  / /| | / /_  / / / / / ___/ ___/ / / / __  __ \\
+ / ___ |/ __/ / /_/ / / /__/ /  / /_/ / / / / / /
+/_/  |_/_/    \\__,_/_/\\___/_/   \\__,_/_/ /_/ /_/ 
+                                                 
+                    Terminal Blog v2.0
+        </pre>
+        <div class="welcome-text">
+          <p class="highlight">🚀 欢迎来到 AFulcrum 的终端博客！</p>
+          <p>输入 <span class="command glow">help</span> 查看可用命令</p>
+          <p class="tip">
+            💡 提示：使用 ↑↓ 键浏览历史，Tab 键自动补全，Ctrl+C 中断，Ctrl+L
+            清屏
+          </p>
+        </div>
+        <hr class="separator" />
+      </div>
+    `;
+
+    // 清除所有内容后重新添加欢迎界面
+    this.output.innerHTML = welcomeMessage;
+
+    // 移除任何存在的浮动索引
+    const existingIndex = document.querySelector(".floating-index");
+    if (existingIndex) {
+      existingIndex.remove();
+    }
   }
 
   showTree() {
@@ -1483,72 +1809,182 @@ Document/
       return;
     }
 
-    const fullPath = this.resolvePath(filename);
+    // 处理文件路径，提取实际文件名和分类
+    let actualFilename = filename;
+    let category = "";
+
+    if (filename.includes("/")) {
+      const pathParts = filename.split("/");
+      actualFilename = pathParts[pathParts.length - 1];
+
+      // 从路径中提取分类
+      if (pathParts.includes("Blender")) {
+        category = "Blender";
+      } else if (pathParts.includes("Obsidian")) {
+        category = "Obsidian";
+      }
+    }
 
     // 检查是否是markdown文件
-    if (!filename.endsWith(".md")) {
+    if (!actualFilename.endsWith(".md")) {
       this.addOutput(`cat: ${filename}: 不是文本文件`, "error");
       return;
     }
 
-    // 模拟文章内容 - 实际项目中这里应该从服务器获取
-    const articles = {
-      "Blender基础.md": await this.loadArticleContent(
-        "Blender",
-        "Blender基础.md"
-      ),
-      "Dataview.md": await this.loadArticleContent("Obsidian", "Dataview.md"),
-      "markdown基础语法.md": await this.loadArticleContent(
-        "Obsidian",
-        "markdown基础语法.md"
-      ),
-      "数学块.md": await this.loadArticleContent("Obsidian", "数学块.md"),
+    // 文件映射
+    const fileMapping = {
+      "Blender基础.md": { category: "Blender", filename: "Blender基础.md" },
+      "Dataview.md": { category: "Obsidian", filename: "Dataview.md" },
+      "markdown基础语法.md": {
+        category: "Obsidian",
+        filename: "markdown基础语法.md",
+      },
+      "数学块.md": { category: "Obsidian", filename: "数学块.md" },
     };
 
-    if (articles[filename]) {
-      this.addOutput("─".repeat(60), "info");
-      this.displayMarkdown(articles[filename]);
-      this.addOutput("─".repeat(60), "info");
-    } else {
+    const fileInfo = fileMapping[actualFilename];
+    if (!fileInfo) {
       this.addOutput(`cat: ${filename}: 没有那个文件`, "error");
+      return;
+    }
+
+    try {
+      this.addOutput("📖 正在加载文档...", "info");
+      const content = await this.loadArticleContent(
+        fileInfo.category,
+        fileInfo.filename
+      );
+
+      this.addOutput("─".repeat(60), "info");
+      this.displayMarkdown(content);
+      this.addOutput("─".repeat(60), "info");
+      this.addOutput(`✅ 文档 ${actualFilename} 加载完成`, "success");
+    } catch (error) {
+      this.addOutput(`❌ 加载文档失败: ${error.message}`, "error");
+      console.error("文档加载错误:", error);
     }
   }
 
   async loadArticleContent(category, filename) {
     try {
-      return await this.articleLoader.loadArticleContent(category, filename);
+      if (!this.articleLoader) {
+        this.articleLoader = new ArticleLoader();
+      }
+
+      const content = await this.articleLoader.loadArticleContent(
+        category,
+        filename
+      );
+      return content;
     } catch (error) {
       console.error("加载文章失败:", error);
-      return `# ${filename}\n\n文章加载失败，请稍后重试。`;
+      return this.getFallbackContent(filename, error.message);
     }
   }
 
+  getFallbackContent(filename, errorMessage) {
+    return `# ${filename.replace(".md", "")}
+
+⚠️ **文章加载失败**
+
+---
+
+## 🔍 问题详情
+
+**文件名**: ${filename}
+**错误信息**: ${errorMessage || "未知错误"}
+
+---
+
+## 💡 可能的解决方案
+
+1. **检查网络连接** - 确保您的网络连接正常
+2. **刷新页面** - 尝试刷新浏览器页面重新加载
+3. **稍后重试** - 可能是临时的服务器问题
+4. **检查文件路径** - 确认文件路径是否正确
+
+---
+
+## 📞 联系支持
+
+如果问题持续存在，请联系技术支持：
+- 使用 \`contact\` 命令查看联系方式
+- 或者使用 \`help\` 命令查看其他可用选项
+
+---
+
+*系统时间: ${new Date().toLocaleString()}*`;
+  }
+
   displayMarkdown(content) {
-    // 简单的markdown渲染
+    // 改进的markdown渲染
     const lines = content.split("\n");
     let html = "";
+    let inCodeBlock = false;
+    let codeBlockLanguage = "";
 
     for (let line of lines) {
-      line = line.trim();
+      const originalLine = line;
+      line = line.trimEnd();
 
+      // 处理代码块
+      if (line.startsWith("```")) {
+        if (!inCodeBlock) {
+          inCodeBlock = true;
+          codeBlockLanguage = line.substring(3).trim();
+          html += `<div class="code-block-start">💻 代码块 ${
+            codeBlockLanguage ? `(${codeBlockLanguage})` : ""
+          }</div>`;
+        } else {
+          inCodeBlock = false;
+          html += `<div class="code-block-end">📋 代码块结束</div>`;
+        }
+        continue;
+      }
+
+      if (inCodeBlock) {
+        html += `<div class="code-line">${this.escapeHtml(line)}</div>`;
+        continue;
+      }
+
+      // 处理标题
       if (line.startsWith("# ")) {
-        html += `<h1>${line.substring(2)}</h1>`;
+        html += `<h1 class="markdown-h1">📖 ${line.substring(2)}</h1>`;
       } else if (line.startsWith("## ")) {
-        html += `<h2>${line.substring(3)}</h2>`;
+        html += `<h2 class="markdown-h2">📝 ${line.substring(3)}</h2>`;
       } else if (line.startsWith("### ")) {
-        html += `<h3>${line.substring(4)}</h3>`;
-      } else if (line.startsWith("- ")) {
-        html += `<div>• ${line.substring(2)}</div>`;
+        html += `<h3 class="markdown-h3">🔹 ${line.substring(4)}</h3>`;
+      } else if (line.startsWith("#### ")) {
+        html += `<h4 class="markdown-h4">▪️ ${line.substring(5)}</h4>`;
+      }
+      // 处理列表
+      else if (line.startsWith("- ") || line.startsWith("* ")) {
+        html += `<div class="markdown-list-item">🔸 ${this.processInlineMarkdown(
+          line.substring(2)
+        )}</div>`;
       } else if (line.match(/^\d+\. /)) {
-        html += `<div>${line}</div>`;
-      } else if (line.startsWith("```")) {
-        html += `<div style="color: #888;">${line}</div>`;
-      } else if (line.includes("`") && !line.startsWith("```")) {
-        html += `<div>${line.replace(/`([^`]+)`/g, "<code>$1</code>")}</div>`;
-      } else if (line) {
-        html += `<div>${line}</div>`;
-      } else {
-        html += "<div></div>";
+        const match = line.match(/^(\d+)\. (.+)/);
+        if (match) {
+          html += `<div class="markdown-ordered-item">📌 ${
+            match[1]
+          }. ${this.processInlineMarkdown(match[2])}</div>`;
+        }
+      }
+      // 处理引用
+      else if (line.startsWith("> ")) {
+        html += `<div class="markdown-quote">💬 ${this.processInlineMarkdown(
+          line.substring(2)
+        )}</div>`;
+      }
+      // 处理空行
+      else if (line.trim() === "") {
+        html += `<div class="markdown-spacer"></div>`;
+      }
+      // 处理普通段落
+      else if (line.trim()) {
+        html += `<div class="markdown-paragraph">${this.processInlineMarkdown(
+          line
+        )}</div>`;
       }
     }
 
@@ -1556,6 +1992,36 @@ Document/
     contentDiv.className = "article-content";
     contentDiv.innerHTML = html;
     this.output.appendChild(contentDiv);
+  }
+
+  processInlineMarkdown(text) {
+    // 处理行内markdown语法
+    return (
+      text
+        // 代码
+        .replace(/`([^`]+)`/g, '<span class="inline-code">$1</span>')
+        // 粗体
+        .replace(
+          /\*\*([^*]+)\*\*/g,
+          '<strong class="markdown-bold">$1</strong>'
+        )
+        // 斜体
+        .replace(/\*([^*]+)\*/g, '<em class="markdown-italic">$1</em>')
+        // 链接
+        .replace(
+          /\[([^\]]+)\]\(([^)]+)\)/g,
+          '<a href="$2" class="markdown-link" target="_blank">🔗 $1</a>'
+        )
+        // 转义HTML
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+    );
+  }
+
+  escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
   }
 
   findFiles(query) {
@@ -1745,4 +2211,6 @@ let terminal;
 // 初始化终端博客
 document.addEventListener("DOMContentLoaded", () => {
   terminal = new TerminalBlog();
+  // 初始化全局命令点击处理
+  terminal.addCommandClickHandlers();
 });
