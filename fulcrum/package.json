@@ -8,6 +8,7 @@
     "serve": "vitepress serve docs"
   },
   "devDependencies": {
+    "vite": "^4.5.0",
     "vue": "3.2.44",
     "vitepress": "1.0.0-alpha.28"
   },
