@@ -52,6 +52,12 @@ jobs:
         run: pnpm run build
         working-directory: fulcrum
 
+      - name: Include logo in artifact
+        if: ${{ always() }}
+        run: |
+          if [ -f docs/cobra.ico ]; then cp docs/cobra.ico docs/.vitepress/dist/cobra.ico; fi
+        working-directory: fulcrum
+
       - name: List dist
         run: |
           ls -la docs/.vitepress/dist || true

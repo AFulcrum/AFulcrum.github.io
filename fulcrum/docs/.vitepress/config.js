@@ -14,9 +14,12 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "theme-color", content: "#2e7ad3" }],
+    // 站点 favicon（同时也可供部分平台作为 logo 使用）
+    ["link", { rel: "icon", href: "/cobra.ico" }],
   ],
   lastUpdated: true,
-  cleanUrls: "without-subfolders",
+  // GitHub Pages 上使用 with-subfolders 可减少直链 404（目录索引）
+  cleanUrls: "with-subfolders",
   // 不将图片资源目录当作文档页面处理
   srcExclude: [
     // 排除任意 blogs/posts 下的 resources 子目录
