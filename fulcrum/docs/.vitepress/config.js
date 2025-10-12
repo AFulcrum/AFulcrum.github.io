@@ -31,7 +31,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
 
   themeConfig: {
-    logo: { src: "/cobra.ico", alt: "Fulcrum" },
+    logo: { src: "public/cobra.ico"},
     outline: [2, 4],
     nav: [
       { text: "首页", link: "/" },
