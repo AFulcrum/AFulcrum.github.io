@@ -1,7 +1,3 @@
----
-title: Obsidian文件同步
-date: 2025-09-17
----
 # 所需工具
 
 - obsidian
