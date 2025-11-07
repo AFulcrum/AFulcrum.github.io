@@ -4,7 +4,7 @@
 
 # Site
 title: AFulcrum
-subtitle: ""
+subtitle: "AFulcrum"
 description: ""
 keywords:
 author: 眼镜蛇学士
@@ -133,3 +133,11 @@ feed:
   content_limit: 140
   content_limit_delim: " "
   order_by: -date
+
+# 添加emoji表情支持
+githubEmojis:
+  enable: true
+  className: github-emoji
+  inject: true
+  styles:
+  customEmojis:
