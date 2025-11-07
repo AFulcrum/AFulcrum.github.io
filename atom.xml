@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>AFulcrum</title>
+  
+  <subtitle>AFulcrum</subtitle>
+  <link href="https://afulcrum.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://afulcrum.github.io/"/>
+  <updated>2025-11-07T18:10:32.675Z</updated>
+  <id>https://afulcrum.github.io/</id>
+  
+  <author>
+    <name>眼镜蛇学士</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Obsidian数学块语法</title>
+    <link href="https://afulcrum.github.io/2025/11/25/obsidian-shu-xue-kuai-yu-fa/"/>
+    <id>https://afulcrum.github.io/2025/11/25/obsidian-shu-xue-kuai-yu-fa/</id>
+    <published>2025-11-24T16:00:00.000Z</published>
+    <updated>2025-11-07T18:10:32.675Z</updated>
+    
+    
+    <summary type="html">讲解Obsidian中关于数学块的使用方法</summary>
+    
+    
+    
+    <category term="Markdown" scheme="https://afulcrum.github.io/categories/Markdown/"/>
+    
+    
+    <category term="Markdown" scheme="https://afulcrum.github.io/tags/Markdown/"/>
+    
+    <category term="Obsidian" scheme="https://afulcrum.github.io/tags/Obsidian/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Obsidian文件同步</title>
+    <link href="https://afulcrum.github.io/2025/11/15/obsidian-wen-jian-tong-bu/"/>
+    <id>https://afulcrum.github.io/2025/11/15/obsidian-wen-jian-tong-bu/</id>
+    <published>2025-11-14T16:00:00.000Z</published>
+    <updated>2025-11-06T12:39:27.089Z</updated>
+    
+    
+    <summary type="html">将Obsidian中的文档多端同步，无需拥有Obsidian账号，可以在不使用官方功能的前提下多端共享文件夹，在移动端阅读和编辑。</summary>
+    
+    
+    
+    <category term="Markdown" scheme="https://afulcrum.github.io/categories/Markdown/"/>
+    
+    
+    <category term="Obsidian" scheme="https://afulcrum.github.io/tags/Obsidian/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://afulcrum.github.io/2025/11/08/hello-world/"/>
+    <id>https://afulcrum.github.io/2025/11/08/hello-world/</id>
+    <published>2025-11-07T18:10:32.676Z</published>
+    <updated>2025-11-07T18:10:32.676Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Markdown 指南</title>
+    <link href="https://afulcrum.github.io/2025/11/05/markdown-zhi-nan/"/>
+    <id>https://afulcrum.github.io/2025/11/05/markdown-zhi-nan/</id>
+    <published>2025-11-04T16:00:00.000Z</published>
+    <updated>2025-11-06T12:29:36.221Z</updated>
+    
+    
+    <summary type="html">本文全面介绍 Markdown 语法，包含基础与进阶用法，并特别标注了在 Obsidian 中的快捷键支持。</summary>
+    
+    
+    
+    <category term="Markdown" scheme="https://afulcrum.github.io/categories/Markdown/"/>
+    
+    
+    <category term="Markdown" scheme="https://afulcrum.github.io/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搜集杂记</title>
+    <link href="https://afulcrum.github.io/2025/10/05/sou-ji-za-ji/"/>
+    <id>https://afulcrum.github.io/2025/10/05/sou-ji-za-ji/</id>
+    <published>2025-10-04T16:00:00.000Z</published>
+    <updated>2025-11-07T18:10:32.677Z</updated>
+    
+    
+    <summary type="html">一些网站工具分享</summary>
+    
+    
+    
+    
+    <category term="分享" scheme="https://afulcrum.github.io/tags/%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>网易基岩版转Java版方法</title>
+    <link href="https://afulcrum.github.io/2025/09/05/wang-yi-ji-yan-ban-zhuan-java-ban-fang-fa/"/>
+    <id>https://afulcrum.github.io/2025/09/05/wang-yi-ji-yan-ban-zhuan-java-ban-fang-fa/</id>
+    <published>2025-09-04T16:00:00.000Z</published>
+    <updated>2025-11-06T12:29:10.401Z</updated>
+    
+    
+    <summary type="html">将网易基岩版的地图转换为Java版本</summary>
+    
+    
+    
+    <category term="游戏娱乐" scheme="https://afulcrum.github.io/categories/%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90/"/>
+    
+    
+    <category term="MC" scheme="https://afulcrum.github.io/tags/MC/"/>
+    
+  </entry>
+  
+</feed>
