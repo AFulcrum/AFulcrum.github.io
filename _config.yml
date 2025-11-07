@@ -8,12 +8,12 @@ subtitle: ""
 description: ""
 keywords:
 author: Pan
-language: CH-ZN
+language: zh-CN
 timezone: ""
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://afulcrum.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -61,7 +61,7 @@ prismjs:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ""
-  per_page: 10
+  per_page: 12
   order_by: -date
 
 # Category & Tag
@@ -104,3 +104,33 @@ deploy:
   type: git
   repo: https://github.com/AFulcrum/AFulcrum.github.io.git
   branch: main
+
+
+# 新增
+# search
+search:
+  path: search.xml
+  field: post
+
+# 中文链接转拼音
+permalink_pinyin:
+  enable: true
+  separator: '-' # default: '-'
+
+# 文章字数统计
+wordCount:
+  enable: true # 将这个值设置为 true 即可.
+  postWordCount: true
+  min2read: true
+  totalCount: true
+
+# RSS 订阅支持
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
