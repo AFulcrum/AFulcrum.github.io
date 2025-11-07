@@ -1,0 +1,1324 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Markdown 指南, AFulcrum">
+    <meta name="description" content="
+这里推荐可以使用 obsidian（基于本地文件夹，所有笔记都是  .md  文件。支持双向链接，能形成知识网络。插件生态极其强大，可无限扩展）和 typora（所见即所得，界面干净，专注于写作本身。是培养 Markdown 手感和兴趣的">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Markdown 指南 | AFulcrum</title>
+    <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
+    
+    <style>
+        body{
+            background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="AFulcrum" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">AFulcrum</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">AFulcrum</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/AFulcrum/AFulcrum.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/AFulcrum/AFulcrum.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Markdown 指南</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Markdown/">
+                                <span class="chip bg-color">Markdown</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Markdown/" class="post-category">
+                                Markdown
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-11-05
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-11-06
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    8 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>这里推荐可以使用 obsidian（基于本地文件夹，所有笔记都是  <code>.md</code>  文件。支持<strong>双向链接</strong>，能形成知识网络。插件生态极其强大，可无限扩展）和 typora（所见即所得，界面干净，专注于写作本身。是培养 Markdown 手感和兴趣的最佳选择）作为使用软件，或者在 sublime text 和 vscode 等中使用插件。</p>
+</blockquote>
+<h1 id="了解-Markdwon"><a href="#了解-Markdwon" class="headerlink" title="了解 Markdwon"></a>了解 Markdwon</h1><h2 id="Markdown-是什么"><a href="#Markdown-是什么" class="headerlink" title="Markdown 是什么?"></a>Markdown 是什么?</h2><p>Markdown 是一种轻量级标记语言，创始人是约翰·格鲁伯（John Gruber）。它允许人们”使用易读易写的纯文本格式编写文档，然后转换成有效的 HTML 文档”。</p>
+<h2 id="Markdown-的核心特点"><a href="#Markdown-的核心特点" class="headerlink" title="Markdown 的核心特点"></a>Markdown 的核心特点</h2><ul>
+<li><p><strong>简洁性：</strong> 使用直观的符号来表示格式，比如用  <code>#</code>  表示标题，用  <code>*</code>  表示列表项。这些符号在视觉上就能传达其含义，即使不进行渲染也具有良好的可读性。</p>
+</li>
+<li><p><strong>可读性：</strong> 即使是纯文本形式的 Markdown 文档，也能清晰地展现文档的结构和层次。读者无需专门的软件就能理解内容的组织方式。</p>
+</li>
+<li><p><strong>便携性：</strong> Markdown 文件是纯文本格式，可以在任何文本编辑器中打开和编辑，不依赖特定的软件或操作系统。</p>
+</li>
+<li><p><strong>转换性：</strong> 可以轻松转换为 HTML、PDF、Word 文档等多种格式，满足不同的发布需求。</p>
+</li>
+</ul>
+<h2 id="Markdown-与-HTML-的关系"><a href="#Markdown-与-HTML-的关系" class="headerlink" title="Markdown 与 HTML 的关系"></a>Markdown 与 HTML 的关系</h2><p>Markdown 并不是 HTML 的替代品，而是 HTML 的简化版本。实际上，Markdown 的最终目标就是转换为 HTML。两者的关系可以理解为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Markdown 源码 → 解析器 → HTML 输出 → 浏览器渲染</span><br></pre></td></tr></table></figure>
+
+<h2 id="为什么使用-Markdown？"><a href="#为什么使用-Markdown？" class="headerlink" title="为什么使用 Markdown？"></a>为什么使用 Markdown？</h2><ol>
+<li><p>提高写作效率：无需频繁使用鼠标进行格式设置，可以保持思路的连贯性。专注于内容创作而不被格式问题分散注意力。</p>
+</li>
+<li><p>降低学习门槛：相比于 LaTeX、HTML 等标记语言，Markdown 的语法极其简单，可以快速掌握基本用法。</p>
+</li>
+<li><p>广泛兼容性：几乎所有的现代文本编辑器、代码编辑器、笔记应用都支持 Markdown。</p>
+</li>
+<li><p>主流平台支持：大部分平台都支持 markdown 比如 GitHub、Gitee、CSDN、Notion、Typora、Obsidian 等等。</p>
+</li>
+<li><p>版本控制友好：由于是纯文本格式，Markdown 文件可以很好地与 Git 等版本控制系统配合，而 Word 只会将内容锁定在专有文件格式中。</p>
+</li>
+<li><p>未来适应性：即使特定的软件或平台消失，Markdown 文件作为纯文本仍然可以被访问和编辑，确保了内容的长期可用性。</p>
+</li>
+<li><p>平台独立性：可以在大部分设备上创建 Markdown 格式的文本并且不受特定软件版本限制。</p>
+</li>
+<li><p>应用场景广泛：技术文档编写、博客文章创作、学术写作甚至日常记录。</p>
+</li>
+</ol>
+<h1 id="Markdown-语法"><a href="#Markdown-语法" class="headerlink" title="Markdown 语法"></a>Markdown 语法</h1><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>创建标题使用 1-6 个 <code>#</code> 符号，对应 HTML 的 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code> 标签：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 二级标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 三级标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">#### 四级标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">##### 五级标题</span></span><br><span class="line"></span><br><span class="line"><span class="section">###### 六级标题</span></span><br></pre></td></tr></table></figure>
+
+<p>替代语法（仅适用于一级和二级标题）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">一级标题</span><br><span class="line">=======</span><br><span class="line"></span><br><span class="line">二级标题</span><br><span class="line">-------</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示</strong>：在 Obsidian 中，使用 <code>Ctrl+1</code> 到 <code>Ctrl+6</code> 可快速创建相应级别的标题。有一些软件可能不支持代替语法了，不过目前来看 obsidian 可以。</p>
+</blockquote>
+<h2 id="段落与换行"><a href="#段落与换行" class="headerlink" title="段落与换行"></a>段落与换行</h2><ul>
+<li><p><strong>段落</strong>：用一个空行（打两个连续回车）分隔两个段落，会产生较大的垂直间距</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是第一个段落。</span><br><span class="line"></span><br><span class="line">这是第二个段落（中间有一个空行）。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>换行</strong>：在行尾添加两个空格 + 回车，实现单一行内的换行（无垂直间距）</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是第一行（末尾有两个空格）</span><br><span class="line">这是第二行</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：某些软件也支持直接使用 <code>&lt;br&gt;</code> 标签强制换行。</p>
+</blockquote>
+<h2 id="字体样式"><a href="#字体样式" class="headerlink" title="字体样式"></a>字体样式</h2><h3 id="粗体-（Ctrl-B）"><a href="#粗体-（Ctrl-B）" class="headerlink" title="粗体 （Ctrl+B）"></a>粗体 （Ctrl+B）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**加粗文本**</span> 或者 <span class="strong">**加粗文本**</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加粗文本</strong> 或者 <strong>加粗文本</strong></p>
+<h3 id="斜体-（Ctrl-I）"><a href="#斜体-（Ctrl-I）" class="headerlink" title="斜体 （Ctrl+I）"></a>斜体 （Ctrl+I）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">_斜体文本_</span> 或者 <span class="emphasis">_斜体文本_</span></span><br></pre></td></tr></table></figure>
+
+<p><em>斜体文本</em> 或者 <em>斜体文本</em></p>
+<h3 id="粗斜体"><a href="#粗斜体" class="headerlink" title="粗斜体"></a>粗斜体</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**<span class="emphasis">_粗斜体_</span>**</span> 或者 <span class="strong">**<span class="emphasis">_粗斜体_</span>**</span> 或者 <span class="emphasis">_<span class="strong">**粗斜体**</span>_</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><em>粗斜体</em></strong> 或者 <strong><em>粗斜体</em></strong> 或者 <em><strong>粗斜体</strong></em></p>
+<h3 id="删除线-（Alt-D）"><a href="#删除线-（Alt-D）" class="headerlink" title="删除线 （Alt+D）"></a>删除线 （Alt+D）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~删除文本~~</span><br></pre></td></tr></table></figure>
+
+<p><del>删除文本</del></p>
+<h3 id="高亮-（Alt-G）"><a href="#高亮-（Alt-G）" class="headerlink" title="高亮 （Alt+G）"></a>高亮 （Alt+G）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">==高亮文本==</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;高亮文本&#x3D;&#x3D;</p>
+<blockquote>
+<p><strong>注意</strong>：高亮语法并非所有软件都支持，但 Obsidian 支持此语法。</p>
+</blockquote>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="无序列表-（Ctrl-W）"><a href="#无序列表-（Ctrl-W）" class="headerlink" title="无序列表 （Ctrl+W）"></a>无序列表 （Ctrl+W）</h3><p>使用 <code>-</code>、<code>*</code> 或 <code>+</code> 符号创建，符号后需加一个空格：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> 项目一</span><br><span class="line"><span class="bullet">-</span> 项目二</span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> 项目三</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> 项目四</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>项目一</li>
+<li>项目二</li>
+</ul>
+<ul>
+<li>项目三</li>
+</ul>
+<ul>
+<li>项目四</li>
+</ul>
+<blockquote>
+<p><strong>最佳实践</strong>：在同一个列表中保持符号一致性，否则某些解析器会视为新列表开始。</p>
+</blockquote>
+<h3 id="有序列表-（Ctrl-Y）"><a href="#有序列表-（Ctrl-Y）" class="headerlink" title="有序列表 （Ctrl+Y）"></a>有序列表 （Ctrl+Y）</h3><p>使用 <code>数字.</code> 标记，数字后加空格：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 第一项</span><br><span class="line"><span class="bullet">2.</span> 第二项</span><br><span class="line"><span class="bullet">3.</span> 第三项（数字错误也会自动修正）</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项（数字错误也会自动修正）</li>
+</ol>
+<h3 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> [x] 已完成任务</span><br><span class="line"><span class="bullet">-</span> [ ] 未完成任务</span><br><span class="line"><span class="bullet">-</span> [ ] 另一个任务</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 已完成任务</li>
+<li><input disabled="" type="checkbox"> 未完成任务</li>
+<li><input disabled="" type="checkbox"> 另一个任务</li>
+</ul>
+<h3 id="嵌套列表"><a href="#嵌套列表" class="headerlink" title="嵌套列表"></a>嵌套列表</h3><p>通过缩进创建多级列表：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 第一项</span><br><span class="line"><span class="bullet">   -</span> 子项一</span><br><span class="line"><span class="bullet">   -</span> 子项二</span><br><span class="line"><span class="bullet">2.</span> 第二项</span><br><span class="line"><span class="bullet">   -</span> 子项 A</span><br><span class="line"><span class="bullet">     -</span> 子子项</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>第一项<ul>
+<li>子项一</li>
+<li>子项二</li>
+</ul>
+</li>
+<li>第二项<ul>
+<li>子项 A<ul>
+<li>子子项</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>在段落前加 <code>&gt;</code> 符号表示引用：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 这是一个引用块。</span></span><br><span class="line"><span class="quote">&gt; 可以跨越多行。</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这是一个引用块。<br>可以跨越多行。</p>
+</blockquote>
+<p>嵌套引用：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 一级引用</span></span><br><span class="line"><span class="quote">&gt;</span></span><br><span class="line"><span class="quote">&gt; &gt; 二级引用</span></span><br><span class="line"><span class="quote">&gt; &gt;</span></span><br><span class="line"><span class="quote">&gt; &gt; &gt; 三级引用</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>一级引用</p>
+<blockquote>
+<p>二级引用</p>
+<blockquote>
+<p>三级引用</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>引用中包含其他元素：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; ## 引用中的标题</span></span><br><span class="line"><span class="quote">&gt;</span></span><br><span class="line"><span class="quote">&gt; - 引用中的列表</span></span><br><span class="line"><span class="quote">&gt; - 另一个项目</span></span><br><span class="line"><span class="quote">&gt;   `引用中的代码`</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<h2 id="引用中的标题"><a href="#引用中的标题" class="headerlink" title="引用中的标题"></a>引用中的标题</h2><ul>
+<li>引用中的列表</li>
+<li>另一个项目<br><code>引用中的代码</code></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>引用中包含其他元素并非所有软件都支持显示（比如 obsidian 就不可以）。</p>
+</blockquote>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h3 id="行内链接"><a href="#行内链接" class="headerlink" title="行内链接"></a>行内链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">百度搜索</span>](<span class="link">https://www.baidu.com</span>)</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">百度搜索</a></p>
+<h3 id="引用链接"><a href="#引用链接" class="headerlink" title="引用链接"></a>引用链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是一个[<span class="string">引用链接</span>][<span class="symbol">baidu</span>]的示例。</span><br><span class="line"></span><br><span class="line">[<span class="symbol">baidu</span>]: <span class="link">https://www.baidu.com &quot;百度首页&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是一个<a target="_blank" rel="noopener" href="https://www.baidu.com/" title="百度首页">引用链接</a>的示例。</p>
+<p>这样点击“引用链接”后就可以跳转到引用链接的页面。</p>
+<h3 id="直接链接"><a href="#直接链接" class="headerlink" title="直接链接"></a>直接链接</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">&lt;https://www.baidu.com&gt;</span></span><br><span class="line"><span class="language-xml">&lt;example@email.com&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a><br><a href="mailto:&#101;&#120;&#97;&#x6d;&#112;&#108;&#x65;&#x40;&#x65;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#x6d;">example@email.com</a></p>
+<h3 id="跳转到文档内的标题"><a href="#跳转到文档内的标题" class="headerlink" title="跳转到文档内的标题"></a>跳转到文档内的标题</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">跳转到[<span class="string">标题</span>](<span class="link">#标题</span>)部分</span><br></pre></td></tr></table></figure>
+
+<p>跳转到<a href="#%E6%A0%87%E9%A2%98">标题</a>部分</p>
+<blockquote>
+<p><strong>注意</strong>：锚点链接中的空格通常用连字符替代，特殊字符可能被忽略。在 obsidian 中可以直接用[[Markdown指南#标题]]来自动寻找要跳转的标题。</p>
+</blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用 <span class="code">`print()`</span> 函数输出文本。</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>print()</code> 函数输出文本。</p>
+<h3 id="代码块-（Alt-C）"><a href="#代码块-（Alt-C）" class="headerlink" title="代码块 （Alt+C）"></a>代码块 （Alt+C）</h3><p>使用三个反引号创建代码块，可指定语言实现语法高亮：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```python</span></span><br><span class="line"><span class="code">def hello_world():</span></span><br><span class="line"><span class="code">    print(&quot;Hello, World!&quot;)</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello_world</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello, World!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>支持的语言包括：javascript、html、css、python、java、sql 等。</p>
+<h3 id="缩进代码块"><a href="#缩进代码块" class="headerlink" title="缩进代码块"></a>缩进代码块</h3><p>使用四个空格或一个制表符创建代码块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是缩进代码块</span><br><span class="line">第二行代码</span><br></pre></td></tr></table></figure>
+
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>使用三个及以上 <code>-</code>、<code>*</code> 或 <code>_</code> 创建分割线：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<hr>
+<hr>
+<hr>
+<blockquote>
+<p><strong>注意</strong>：分割线前后最好有空行，否则可能被解释为标题（<a href="#%E6%A0%87%E9%A2%98">标题</a>）。</p>
+</blockquote>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>语法与链接类似，前面加 <code>!</code>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">替代文本</span>](<span class="link">图片URL &quot;可选标题&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">Obsidian图标</span>](<span class="link">https://obsidian.md/favicon.ico &quot;Obsidian&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示</strong>：在 Obsidian 中，可以直接拖拽图片到文档中插入，但是本地图片的地址显示并不规范，无法直接在其他软件中使用，并且建议用相对地址。</p>
+</blockquote>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>使用 <code>|</code> 和 <code>-</code> 创建表格：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| 左对齐 | 居中对齐 | 右对齐 |</span><br><span class="line">| :----- | :------: | -----: |</span><br><span class="line">| 单元格 |  单元格  | 单元格 |</span><br><span class="line">| 第二行 |   数据   |   数据 |</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">左对齐</th>
+<th align="center">居中对齐</th>
+<th align="right">右对齐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">单元格</td>
+<td align="center">单元格</td>
+<td align="right">单元格</td>
+</tr>
+<tr>
+<td align="left">第二行</td>
+<td align="center">数据</td>
+<td align="right">数据</td>
+</tr>
+</tbody></table>
+<p>也可以不带<code>:</code>，这样默认左对齐显示。</p>
+<blockquote>
+<p><strong>提示</strong>：在 Obsidian 中，有多种插件可以增强表格功能，如 Advanced Tables。</p>
+</blockquote>
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>在 markdown 中一些符号不能直接显示，可以使用 <code>\</code> 转义特殊字符：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\<span class="emphasis">*这不是斜体\*</span></span><br><span class="line">\# 这不是标题</span><br><span class="line">\[这不是链接]\(not-a-link.com)</span><br></pre></td></tr></table></figure>
+
+<p>*这不是斜体*<br># 这不是标题<br>[这不是链接](not-a-link.com)</p>
+<p>需要转义的字符：<code>\</code> <code>`</code> <code>*</code> <code>_</code> <code>{}</code> <code>[]</code> <code>()</code> <code>#</code> <code>+</code> <code>-</code> <code>.</code> <code>!</code> <code>|</code></p>
+<h2 id="内嵌-HTML"><a href="#内嵌-HTML" class="headerlink" title="内嵌 HTML"></a>内嵌 HTML</h2><p>Markdown 支持内嵌 HTML：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这是一个<span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:red&quot;</span>&gt;</span>红色文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span>。</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>表格单元格<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这是一个<span style="color:red">红色文本</span>。</p>
+<table>
+  <tr><td>表格单元格</td></tr>
+</table>
+
+<blockquote>
+<p><strong>注意</strong>：并非所有 HTML 标签在所有软件中都有效，不过使用内嵌 HTML 能让我们实现更美观的展示效果。</p>
+</blockquote>
+<h1 id="进阶技巧"><a href="#进阶技巧" class="headerlink" title="进阶技巧"></a>进阶技巧</h1><h2 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是一个带有脚注的句子[^1]。</span><br><span class="line"></span><br><span class="line">[<span class="symbol">^1</span>]: <span class="link">这是脚注的内容。</span></span><br></pre></td></tr></table></figure>
+
+<p>这是一个带有脚注的句子<a href="%E8%BF%99%E6%98%AF%E8%84%9A%E6%B3%A8%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82">^1</a>。</p>
+<h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">_[HTML]: HyperText Markup Language</span></span><br><span class="line"><span class="emphasis">_</span>[CSS]: Cascading Style Sheets</span><br><span class="line"></span><br><span class="line">HTML 和 CSS 是网页开发的基础。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>obsidian 默认不支持这个语法。</p>
+</blockquote>
+<h2 id="注释（不可见）"><a href="#注释（不可见）" class="headerlink" title="注释（不可见）"></a>注释（不可见）</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 这是注释，不会显示在渲染结果中 --&gt;</span><br></pre></td></tr></table></figure>
+
+<!-- 这是注释，不会显示在渲染结果中 -->
+
+<h1 id="下一节"><a href="#下一节" class="headerlink" title="下一节"></a>下一节</h1><p><a href="Obsidian%E6%95%B0%E5%AD%A6%E5%9D%97%E8%AF%AD%E6%B3%95.md">Obsidian 数学块语法</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Markdown/">
+                                    <span class="chip bg-color">Markdown</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2025/11/08/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-11-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            眼镜蛇学士
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/10/05/sou-ji-za-ji/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="搜集杂记">
+                        
+                        <span class="card-title">搜集杂记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-10-05
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            眼镜蛇学士
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%88%86%E4%BA%AB/">
+                        <span class="chip bg-color">分享</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4, h5, h6'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2025</span>
+            
+            <a href="/about" target="_blank">眼镜蛇学士</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">4.9k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2025";
+                        var startMonth = "11";
+                        var startDate = "8";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'zh-CN';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/AFulcrum" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:p17837274759@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3242879792" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3242879792" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
+            }
+        </script>
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
