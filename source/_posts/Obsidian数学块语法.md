@@ -6,6 +6,7 @@ date: 2025-11-25
 tags:
   - Markdown
   - Obsidian
+mathjax: true
 ---
 # 基本数学公式插入
 
