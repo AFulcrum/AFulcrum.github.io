@@ -100,16 +100,16 @@
     
     
     <entry>
-      <title>Tlias智能学习辅助系统</title>
+      <title>Tlias后台管理系统</title>
       <link href="/2025/10/28/tlias-zhi-neng-xue-xi-fu-zhu-xi-tong/"/>
       <url>/2025/10/28/tlias-zhi-neng-xue-xi-fu-zhu-xi-tong/</url>
       
-        <content type="html"><![CDATA[<p><a href="https://heuqqdmbyk.feishu.cn/wiki/LYVswfK4eigRIhkW0pvcqgH9nWd">概述 - 飞书云文档</a></p><p><a href="http://8.148.76.211/">访问地址</a></p><p>后端使用java、Spring Boot；前端使用Vue、create-vue、ElementPlus、nginx；数据库使用MySQL；部署使用Docker。</p>]]></content>
+        <content type="html"><![CDATA[<p><a href="https://heuqqdmbyk.feishu.cn/wiki/LYVswfK4eigRIhkW0pvcqgH9nWd">概述 - 飞书云文档</a></p><p><a href="http://8.148.76.211/">访问地址</a></p><p>后端使用 java、Spring Boot；前端使用 Vue、create-vue、ElementPlus、nginx；数据库使用 MySQL；部署使用 Docker。</p>]]></content>
       
       
       <categories>
           
-          <category> 项目 </category>
+          <category> 练习项目 </category>
           
       </categories>
       
