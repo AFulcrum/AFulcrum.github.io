@@ -13,8 +13,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # If your repository depends on submodule, please see: https://github.com/actions/checkout
-          submodules: recursive
+          # Do not attempt to initialize submodules by default because missing .gitmodules
+          # can cause the runner to fail with "No url found for submodule path".
+          # If you actually use submodules, set this to 'recursive' and ensure .gitmodules is correct.
+          submodules: false
+          fetch-depth: 0
       - name: Use Node.js 22.14.0
         uses: actions/setup-node@v4
         with:
