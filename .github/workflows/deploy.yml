@@ -2,7 +2,7 @@ name: Deploy Hexo Blog
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
 
 # Ensure the workflow has permission to publish GitHub Pages
 permissions:
