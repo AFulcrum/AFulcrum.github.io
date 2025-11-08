@@ -1,6 +1,6 @@
 ---
 title: Tlias后台管理系统
-categories: 项目
+categories: 练习项目
 date: 2025-10-28
 tags:
   - 项目
