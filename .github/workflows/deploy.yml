@@ -1,48 +1,50 @@
-name: Deploy Hexo Blog
+name: Pages
 
 on:
   push:
-    branches: [main]
-
-# Ensure the workflow has permission to publish GitHub Pages
-permissions:
-  contents: write
-  pages: write
+    branches:
+      - main # default branch
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Clone source
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # If your repository depends on submodule, please see: https://github.com/actions/checkout
+          submodules: recursive
+      - name: Use Node.js 22.14.0
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-
-      - name: Cache node_modules
+          # Examples: 20, 18.19, >=16.22.14.0.2, lts/Iron, lts/Hydrogen, *, latest, current, node
+          # Ref: https://github.com/actions/setup-node#supported-version-syntax
+          node-version: "22.14.0"
+      - name: Cache NPM dependencies
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.OS }}-npm-cache
           restore-keys: |
-            ${{ runner.os }}-npm-
-
+            ${{ runner.OS }}-npm-cache
       - name: Install Dependencies
         run: npm install
-
-      - name: Generate Static Files
-        run: npx hexo generate
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Build
+        run: npm run build
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: main # 部署仓库的默认分支
-          # removed external_repository because GITHUB_TOKEN cannot push to an external repository
-          # If you intend to publish to a different repository, create a personal access token (PAT)
-          # or use a deploy_key and set it as a secret (e.g. PERSONAL_TOKEN) and pass it here as:
-          # personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          path: ./public
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
