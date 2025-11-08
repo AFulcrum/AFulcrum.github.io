@@ -1,7 +1,7 @@
 ---
 title: 网易基岩版转Java版方法
 description: 将网易基岩版的地图转换为Java版本
-categories: 游戏娱乐
+categories: MC
 date: 2025-9-05
 tags:
   - MC
@@ -9,7 +9,7 @@ tags:
 # 所需工具
 
 - [我的世界开发者启动器](https://mc.163.com/dev/)
-- [Chunker]([Chunker: Minecraft Java and Bedrock World Converter](https://www.chunker.app/?ref=announcekit))
+- [Chunker](https://www.chunker.app/?ref=announcekit)
 
 # 具体步骤
 
