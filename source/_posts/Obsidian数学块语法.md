@@ -1,6 +1,5 @@
 ---
 title: Obsidian数学块语法
-description: 讲解Obsidian中关于数学块的使用方法
 categories: Markdown
 date: 2025-11-25
 tags:
@@ -8,6 +7,8 @@ tags:
   - Obsidian
 mathjax: true
 ---
+> 讲解Obsidian中关于数学块的使用方法
+
 # 基本数学公式插入
 
 ## 行内公式

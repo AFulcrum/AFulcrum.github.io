@@ -1,13 +1,12 @@
 ---
 title: Markdown 指南
-description: 本文全面介绍 Markdown 语法，包含基础与进阶用法，并特别标注了在 Obsidian 中的快捷键支持。
 categories: Markdown
 date: 2025-11-05
 tags:
   - Markdown
 ---
 
-> 这里推荐可以使用 obsidian（基于本地文件夹，所有笔记都是  `.md`  文件。支持**双向链接**，能形成知识网络。插件生态极其强大，可无限扩展）和 typora（所见即所得，界面干净，专注于写作本身。是培养 Markdown 手感和兴趣的最佳选择）作为使用软件，或者在 sublime text 和 vscode 等中使用插件。
+> 本文全面介绍 Markdown 语法，包含基础与进阶用法，并特别标注了在 Obsidian 中的快捷键支持。这里推荐可以使用 obsidian（基于本地文件夹，所有笔记都是  `.md`  文件。支持**双向链接**，能形成知识网络。插件生态极其强大，可无限扩展）和 typora（所见即所得，界面干净，专注于写作本身。是培养 Markdown 手感和兴趣的最佳选择）作为使用软件，或者在 sublime text 和 vscode 等中使用插件。
 
 # 了解 Markdwon
 

@@ -1,11 +1,12 @@
 ---
 title: Obsidian文件同步
-description: 将Obsidian中的文档多端同步，无需拥有Obsidian账号，可以在不使用官方功能的前提下多端共享文件夹，在移动端阅读和编辑。
 categories: Markdown
 date: 2025-11-15
 tags:
   - Obsidian
 ---
+> 将Obsidian中的文档多端同步，无需拥有Obsidian账号，可以在不使用官方功能的前提下多端共享文件夹，在移动端阅读和编辑。
+
 # 所需工具
 
 - obsidian

@@ -1,11 +1,12 @@
 ---
 title: 网易基岩版转Java版方法
-description: 将网易基岩版的地图转换为Java版本
 categories: MC
 date: 2025-9-05
 tags:
   - MC
 ---
+> 将网易基岩版的地图转换为Java版本
+
 # 所需工具
 
 - [我的世界开发者启动器](https://mc.163.com/dev/)
