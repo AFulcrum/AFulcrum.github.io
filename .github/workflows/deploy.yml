@@ -6,7 +6,7 @@ on:
 
 # Ensure the workflow has permission to publish GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
 
 jobs:
@@ -42,4 +42,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: main # 部署仓库的默认分支
-          external_repository: AFulcrum/AFulcrum.github.io
+          # removed external_repository because GITHUB_TOKEN cannot push to an external repository
+          # If you intend to publish to a different repository, create a personal access token (PAT)
+          # or use a deploy_key and set it as a secret (e.g. PERSONAL_TOKEN) and pass it here as:
+          # personal_token: ${{ secrets.PERSONAL_TOKEN }}
