@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta name="keywords" content="Obsidian数学块语法, AFulcrum">
     <meta name="description" content="基本数学公式插入行内公式使用单个美元符号 $...$ 包裹公式：
-1这是一个行内公式 $E=mc^2$ 的例子。
+这是一个行内公式 $E=mc^2$ 的例子。
 效果：这是一个行内公式 $E=mc^2$ 的例子。
 块级公式使用双美元符号 $$...$$ 包裹公式（单独一行）：
-123$$">
+$$\int">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -66,7 +66,7 @@
 <meta name="generator" content="Hexo 8.1.1">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="AFulcrum" type="application/atom+xml">
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 
 <body>
@@ -398,14 +398,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    820
+                    809
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 
@@ -431,10 +431,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="基本数学公式插入"><a href="#基本数学公式插入" class="headerlink" title="基本数学公式插入"></a>基本数学公式插入</h1><h2 id="行内公式"><a href="#行内公式" class="headerlink" title="行内公式"></a>行内公式</h2><p>使用单个美元符号 <code>$...$</code> 包裹公式：</p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是一个行内公式 $E=mc^2$ 的例子。</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight markdown"><table><tbody><tr><td class="code"><pre><span class="line">这是一个行内公式 $E=mc^2$ 的例子。</span><br></pre></td></tr></tbody></table></figure>
 <p>效果：这是一个行内公式 $E=mc^2$ 的例子。</p>
 <h2 id="块级公式"><a href="#块级公式" class="headerlink" title="块级公式"></a>块级公式</h2><p>使用双美元符号 <code>$$...$$</code> 包裹公式（单独一行）：</p>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$$</span><br><span class="line">\int<span class="emphasis">_a^b f(x)dx = F(b) - F(a)</span></span><br><span class="line"><span class="emphasis">$$</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight markdown"><table><tbody><tr><td class="code"><pre><span class="line">$$</span><br><span class="line">\int<span class="emphasis">_a^b f(x)dx = F(b) - F(a)</span></span><br><span class="line"><span class="emphasis">$$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>效果：<br>$$<br>\int_a^b f(x)dx = F(b) - F(a)<br>$$</p>
 <h1 id="常用数学符号与表达式"><a href="#常用数学符号与表达式" class="headerlink" title="常用数学符号与表达式"></a>常用数学符号与表达式</h1><h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><table>
 <thead>
@@ -639,47 +639,40 @@
 <td><code>\lim_{x \to \infty} f(x)</code>&nbsp;→ $\lim_{x \to \infty} f(x)$</td>
 </tr>
 </tbody></table>
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><table>
-<thead>
-<tr>
-<th>$\infty$</th>
-<th><code>\infty</code></th>
-</tr>
-</thead>
-</table>
-<h1 id="高级数学表达式"><a href="#高级数学表达式" class="headerlink" title="高级数学表达式"></a>高级数学表达式</h1><h2 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h2><figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span>x<span class="built_in">^</span>2 + y<span class="built_in">^</span>{n+1} = z<span class="built_in">_</span>{ij}<span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>$\infty$ ： <code>\infty</code></p>
+<h1 id="高级数学表达式"><a href="#高级数学表达式" class="headerlink" title="高级数学表达式"></a>高级数学表达式</h1><h2 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h2><figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span>x<span class="built_in">^</span>2 + y<span class="built_in">^</span>{n+1} = z<span class="built_in">_</span>{ij}<span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>效果：$x^2 + y^{n+1} = z_{ij}$</p>
-<h2 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h2><figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\frac</span>{a}{b}<span class="built_in">$</span> 或 <span class="built_in">$</span><span class="keyword">\dfrac</span>{a}{b}<span class="built_in">$</span> (显示大小)</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\frac</span>{x+1}{x-1}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h2><figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\frac</span>{a}{b}<span class="built_in">$</span> 或 <span class="built_in">$</span><span class="keyword">\dfrac</span>{a}{b}<span class="built_in">$</span> (显示大小)</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\frac</span>{x+1}{x-1}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>效果：$\frac{a}{b}$ 和 $\dfrac{a}{b}$</p>
 <p>$$<br>\frac{x+1}{x-1}<br>$$</p>
-<h2 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h2><figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\sqrt</span>{x}<span class="built_in">$</span>  <span class="built_in">$</span><span class="keyword">\sqrt</span>[n]{x}<span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\sqrt</span>{<span class="keyword">\frac</span>{a}{b}}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="根式"><a href="#根式" class="headerlink" title="根式"></a>根式</h2><figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\sqrt</span>{x}<span class="built_in">$</span>  <span class="built_in">$</span><span class="keyword">\sqrt</span>[n]{x}<span class="built_in">$</span></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\sqrt</span>{<span class="keyword">\frac</span>{a}{b}}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>效果：$\sqrt{x}$ 和 $\sqrt[n]{x}$</p>
 <p>$$<br>\sqrt{\frac{a}{b}}<br>$$</p>
-<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{matrix}</span><br><span class="line">a <span class="built_in">&amp;</span> b <span class="keyword">\\</span></span><br><span class="line">c <span class="built_in">&amp;</span> d </span><br><span class="line"><span class="keyword">\end</span>{matrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{bmatrix}</span><br><span class="line">1 <span class="built_in">&amp;</span> 2 <span class="keyword">\\</span></span><br><span class="line">3 <span class="built_in">&amp;</span> 4</span><br><span class="line"><span class="keyword">\end</span>{bmatrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{pmatrix}</span><br><span class="line">x <span class="built_in">&amp;</span> y <span class="keyword">\\</span></span><br><span class="line">z <span class="built_in">&amp;</span> w</span><br><span class="line"><span class="keyword">\end</span>{pmatrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{matrix}</span><br><span class="line">a <span class="built_in">&amp;</span> b <span class="keyword">\\</span></span><br><span class="line">c <span class="built_in">&amp;</span> d </span><br><span class="line"><span class="keyword">\end</span>{matrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{bmatrix}</span><br><span class="line">1 <span class="built_in">&amp;</span> 2 <span class="keyword">\\</span></span><br><span class="line">3 <span class="built_in">&amp;</span> 4</span><br><span class="line"><span class="keyword">\end</span>{bmatrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{pmatrix}</span><br><span class="line">x <span class="built_in">&amp;</span> y <span class="keyword">\\</span></span><br><span class="line">z <span class="built_in">&amp;</span> w</span><br><span class="line"><span class="keyword">\end</span>{pmatrix}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>$$<br>\begin{matrix}<br>a &amp; b \<br>c &amp; d<br>\end{matrix}<br>$$</p>
 <p>$$<br>\begin{bmatrix}<br>1 &amp; 2 \<br>3 &amp; 4<br>\end{bmatrix}<br>$$</p>
 <p>$$<br>\begin{pmatrix}<br>x &amp; y \<br>z &amp; w<br>\end{pmatrix}<br>$$</p>
-<h2 id="多行公式"><a href="#多行公式" class="headerlink" title="多行公式"></a>多行公式</h2><figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{align}</span><br><span class="line">f(x) <span class="built_in">&amp;</span>= (x+1)<span class="built_in">^</span>2 <span class="keyword">\\</span></span><br><span class="line">     <span class="built_in">&amp;</span>= x<span class="built_in">^</span>2 + 2x + 1</span><br><span class="line"><span class="keyword">\end</span>{align}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="多行公式"><a href="#多行公式" class="headerlink" title="多行公式"></a>多行公式</h2><figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\begin</span>{align}</span><br><span class="line">f(x) <span class="built_in">&amp;</span>= (x+1)<span class="built_in">^</span>2 <span class="keyword">\\</span></span><br><span class="line">     <span class="built_in">&amp;</span>= x<span class="built_in">^</span>2 + 2x + 1</span><br><span class="line"><span class="keyword">\end</span>{align}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>$$<br>\begin{align}<br>f(x) &amp;= (x+1)^2 \<br>     &amp;= x^2 + 2x + 1<br>\end{align}<br>$$</p>
 <h1 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h1><ol>
 <li><strong>公式编号</strong>：</li>
 </ol>
-<figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">e<span class="built_in">^</span>{i<span class="keyword">\pi</span>} + 1 = 0 <span class="keyword">\tag</span>{1}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">e<span class="built_in">^</span>{i<span class="keyword">\pi</span>} + 1 = 0 <span class="keyword">\tag</span>{1}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>$$<br>e^{i\pi} + 1 = 0 \tag{1}<br>$$</p>
 <ol start="2">
 <li><strong>条件表达式</strong>：</li>
 </ol>
-<figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">f(n) = </span><br><span class="line"><span class="keyword">\begin</span>{cases} </span><br><span class="line">n/2 <span class="built_in">&amp;</span> <span class="keyword">\text</span>{如果 } n <span class="keyword">\text</span>{ 是偶数} <span class="keyword">\\</span></span><br><span class="line">3n+1 <span class="built_in">&amp;</span> <span class="keyword">\text</span>{如果 } n <span class="keyword">\text</span>{ 是奇数}</span><br><span class="line"><span class="keyword">\end</span>{cases}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">f(n) = </span><br><span class="line"><span class="keyword">\begin</span>{cases} </span><br><span class="line">n/2 <span class="built_in">&amp;</span> <span class="keyword">\text</span>{如果 } n <span class="keyword">\text</span>{ 是偶数} <span class="keyword">\\</span></span><br><span class="line">3n+1 <span class="built_in">&amp;</span> <span class="keyword">\text</span>{如果 } n <span class="keyword">\text</span>{ 是奇数}</span><br><span class="line"><span class="keyword">\end</span>{cases}</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>$$<br>f(n) =<br>\begin{cases}<br>n/2 &amp; \text{如果 } n \text{ 是偶数} \<br>3n+1 &amp; \text{如果 } n \text{ 是奇数}<br>\end{cases}<br>$$</p>
 <ol start="3">
 <li><strong>化学方程式</strong>（需要 mhchem 扩展）：</li>
 </ol>
-<figure class="highlight latex"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\ce</span>{H2O}<span class="built_in">$</span>  <span class="built_in">$</span><span class="keyword">\ce</span>{SO4<span class="built_in">^</span>2-}<span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight latex"><table><tbody><tr><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="keyword">\ce</span>{H2O}<span class="built_in">$</span>  <span class="built_in">$</span><span class="keyword">\ce</span>{SO4<span class="built_in">^</span>2-}<span class="built_in">$</span></span><br></pre></td></tr></tbody></table></figure>
 <p>$\ce{H2O}$  $\ce{SO4^2-}$</p>
 <ol start="4">
 <li><strong>引用公式</strong>（结合 Obsidian 的笔记链接功能）：</li>
 </ol>
-<figure class="highlight markdown"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如公式 [[#^eq1]] 所示...</span><br><span class="line"></span><br><span class="line">$$</span><br><span class="line">E=mc^2 \label{eq1} ^eq1</span><br><span class="line">$$</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight markdown"><table><tbody><tr><td class="code"><pre><span class="line">如公式 [[#^eq1]] 所示...</span><br><span class="line"></span><br><span class="line">$$</span><br><span class="line">E=mc^2 \label{eq1} ^eq1</span><br><span class="line">$$</span><br></pre></td></tr></tbody></table></figure>
 <p>$$<br>E=mc^2 \label{eq1} ^eq1<br>$$</p>
 <h1 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h1><h2 id="箭头"><a href="#箭头" class="headerlink" title="箭头"></a>箭头</h2><ul>
 <li><p><code>\to</code>&nbsp;→ $\to$</p>
@@ -1092,7 +1085,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.8k</span>
+                        class="white-color">5.5k</span>
             
             
             

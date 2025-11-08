@@ -6,7 +6,7 @@
   <link href="https://afulcrum.github.io/atom.xml" rel="self"/>
   
   <link href="https://afulcrum.github.io/"/>
-  <updated>2025-11-07T18:10:32.675Z</updated>
+  <updated>2025-11-08T07:44:02.836Z</updated>
   <id>https://afulcrum.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://afulcrum.github.io/2025/11/25/obsidian-shu-xue-kuai-yu-fa/"/>
     <id>https://afulcrum.github.io/2025/11/25/obsidian-shu-xue-kuai-yu-fa/</id>
     <published>2025-11-24T16:00:00.000Z</published>
-    <updated>2025-11-07T18:10:32.675Z</updated>
+    <updated>2025-11-08T07:44:02.836Z</updated>
     
     
     <summary type="html">讲解Obsidian中关于数学块的使用方法</summary>
@@ -57,23 +57,28 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://afulcrum.github.io/2025/11/08/hello-world/"/>
-    <id>https://afulcrum.github.io/2025/11/08/hello-world/</id>
-    <published>2025-11-07T18:10:32.676Z</published>
-    <updated>2025-11-07T18:10:32.676Z</updated>
+    <title>搭建个人博客全流程技术方案</title>
+    <link href="https://afulcrum.github.io/2025/11/08/da-jian-ge-ren-bo-ke-quan-liu-cheng-ji-zhu-fang-an/"/>
+    <id>https://afulcrum.github.io/2025/11/08/da-jian-ge-ren-bo-ke-quan-liu-cheng-ji-zhu-fang-an/</id>
+    <published>2025-11-07T16:00:00.000Z</published>
+    <updated>2025-11-08T07:47:21.740Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文结合我自己的博客搭建经验，记录一次完整的（Hexo）静态博客搭建过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
     
+    
+    <category term="经验" scheme="https://afulcrum.github.io/tags/%E7%BB%8F%E9%AA%8C/"/>
     
   </entry>
   
@@ -118,14 +123,14 @@
     <link href="https://afulcrum.github.io/2025/09/05/wang-yi-ji-yan-ban-zhuan-java-ban-fang-fa/"/>
     <id>https://afulcrum.github.io/2025/09/05/wang-yi-ji-yan-ban-zhuan-java-ban-fang-fa/</id>
     <published>2025-09-04T16:00:00.000Z</published>
-    <updated>2025-11-06T12:29:10.401Z</updated>
+    <updated>2025-11-08T07:44:59.144Z</updated>
     
     
     <summary type="html">将网易基岩版的地图转换为Java版本</summary>
     
     
     
-    <category term="游戏娱乐" scheme="https://afulcrum.github.io/categories/%E6%B8%B8%E6%88%8F%E5%A8%B1%E4%B9%90/"/>
+    <category term="MC" scheme="https://afulcrum.github.io/categories/MC/"/>
     
     
     <category term="MC" scheme="https://afulcrum.github.io/tags/MC/"/>
